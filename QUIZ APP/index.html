@@ -11,7 +11,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
-
+   
+   <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -19,13 +20,47 @@
     <section class="quizBox-container">
         <div class="quizBox">
             <header class="quizBox-header">
-                <h4>Quiz Application</h4>
+                <h2>Quiz Application</h2>
 
-                <button> time Left </button>
+                <button data-timeLeft=""> time Left
+                    <span class="none">1000</span>
+                </button>
             </header>
+            <div class="progress" data-progress="true"></div>
             <section class="quizBox-body">
+                <h4>
+                    <span data-question-before>Q1:</span>
+                    Which tag is used to create a checkbox in HTML?
+                </h4>
+                <div class="options">
+                   <button data-Option="a">
+                        <span>a</span>
+                        <p>&lt;checkbox&gt;</p>
+                   </button>
+                   <button data-Option="b">
+                        <span>b</span>
+                        <p>Server-Sent Events (SSE) is a recent HTML5 specification dose not consume bandwidth compared to traditional polling methods.</p>
+                   </button>
+                    <button data-Option="c" data-selectred="true">
+                        <span>c</span>
+                        <p>Server-Sent Events (SSE) is a recent HTML5 specification dose not consume bandwidth compared to traditional polling methods.</p>
+                   </button>
+                    <button data-Option="d">
+                        <span>d</span>
+                        <p>Server-Sent Events (SSE) is a recent HTML5 specification dose not consume bandwidth compared to traditional polling methods.</p>
+                   </button>
+                </div>
             </section>
-            <footer class="card-footer">
+            <footer class="quizBox-footer">
+                <div data-question-remaning>
+                    <h4>
+                        <span id="remanng__que" >1</span>
+                    of
+                    <span id="totle__que">20</span>
+                    question
+                    </h4>
+                </div>
+                <button id="next__que">next que</button>
             </footer>
         </div>
     </section>

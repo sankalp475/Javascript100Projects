@@ -4,10 +4,10 @@ const QUESTIONS = [
         "question": "Which tag is used to create a checkbox in HTML?",
         "description": null,
         "answers": {
-            "answer_a": "<checkbox>",
-            "answer_b": "< Input type = \"checkbox\">",
-            "answer_c": "<cb>",
-            "answer_d": "< Input type  \"checkbox\">",
+            "answer_a": "&lt;checkbox&gt;",
+            "answer_b": "&lt; Input type = \"checkbox\"&gt;",
+            "answer_c": "&lt;cb&gt;",
+            "answer_d": "&lt; Input type  \"checkbox\"&gt;",
         },
         "multiple_correct_answers": "false",
         "correct_answers": {
@@ -111,10 +111,10 @@ const QUESTIONS = [
         "id": 5,
         "question": "What is the use of Canvas element in HTML5?",
         "answers": {
-            "answer_a": "The canvas element is used to draw graphics by making use of CSS. It is defined with the <canvas> tag.",
-            "answer_b": "The canvas element is used to draw graphics by making use of JavaScript. It is defined with the <canvas> tag.",
-            "answer_c": "The canvas element is used to draw graphics by making use of .NET It is defined with the <canvas> tag.",
-            "answer_d": "The canvas element is used to draw graphics by making use of .JSON It is defined with the <canvas> tag.",
+            "answer_a": "The canvas element is used to draw graphics by making use of CSS. It is defined with the &lt;canvas&gt; tag.",
+            "answer_b": "The canvas element is used to draw graphics by making use of JavaScript. It is defined with the &lt;canvas&gt; tag.",
+            "answer_c": "The canvas element is used to draw graphics by making use of .NET It is defined with the &lt;canvas&gt; tag.",
+            "answer_d": "The canvas element is used to draw graphics by making use of .JSON It is defined with the &lt;canvas&gt; tag.",
         },
         "multiple_correct_answers": "false",
         "correct_answers": {
@@ -163,10 +163,10 @@ const QUESTIONS = [
         "question": "Tags and test that are not directly displayed on the page are written in _____ section.",
         "description": null,
         "answers": {
-            "answer_a": "<html>",
-            "answer_b": "<body>",
-            "answer_c": "<title>",
-            "answer_d": "<head>",
+            "answer_a": "&lt;html&gt;",
+            "answer_b": "&lt;body&gt;",
+            "answer_c": "&lt;title&gt;",
+            "answer_d": "&lt;head&gt;",
         },
         "multiple_correct_answers": "false",
         "correct_answers": {
@@ -186,7 +186,7 @@ const QUESTIONS = [
     },
     {
         "id": 8,
-        "question": "<TD> … </TD> tag is used for ________",
+        "question": "&lt;TD&gt; … &lt;/TD&gt; tag is used for ________",
         "answers": {
             "answer_a": "Table heading",
             "answer_b": "none of the above",
