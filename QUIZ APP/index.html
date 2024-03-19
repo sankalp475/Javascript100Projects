@@ -11,59 +11,75 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
-   
-   <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
     <section class="quizBox-container">
-        <div class="quizBox">
-            <header class="quizBox-header">
-                <h2>Quiz Application</h2>
+        <div class="quizBox" data-guizBox>
+            <div class="startQuiz">
+                <h1> Welcome to Awesome Quiz! App </h1>
+                <p>Are you ready to start? </p>
+                <button> I'm ready</button>
+            </div>
+        </div>
+    </section>
 
-                <button data-timeLeft=""> time Left
-                    <span class="none">1000</span>
-                </button>
-            </header>
-            <div class="progress" data-progress="true"></div>
-            <section class="quizBox-body">
+
+    <template>
+        <header class="quizBox-header">
+            <h2>Quiz Application</h2>
+
+            <button data-timeLeft=""> time Left
+                <span class="">000</span>
+            </button>
+        </header>
+        <div class="progress" data-progress="true"></div>
+        <section class="quizBox-body">
+            <h4>
+                <span data-question-before>Q1:</span>
+                Which tag is used to create a checkbox in HTML?
+            </h4>
+            <div class="options">
+                <label for="option_a" data-Option="a">
+                    <input type="radio" name="options" class="option_a" id="option_1">
+                    <span>a</span>
+                    <p>&lt;checkbox&gt;</p>
+                </label>
+                <label for="option_b" data-Option="b">
+                    <input type="radio" name="options" class="option_b" id="option_2">
+                    <span>b</span>
+                    <p>Server-Sent Events (SSE) is a recent HTML5 specification dose not consume bandwidth compared
+                        to traditional polling methods.</p>
+                </label>
+                <label data-Option="c" data-selectred="true">
+                    <input type="radio" name="options" class="option_b" id="option_3">
+                    <span>c</span>
+                    <p>Server-Sent Events (SSE) is a recent HTML5 specification dose not consume bandwidth compared
+                        to traditional polling methods.</p>
+                </label>
+                <label data-Option="d">
+                    <input type="radio" name="options" class="option_b" id="option_4">
+                    <span>d</span>
+                    <p>Server-Sent Events (SSE) is a recent HTML5 specification dose not consume bandwidth compared
+                        to traditional polling methods.</p>
+                </label>
+            </div>
+        </section>
+        <footer class="quizBox-footer">
+            <div data-question-remaning>
                 <h4>
-                    <span data-question-before>Q1:</span>
-                    Which tag is used to create a checkbox in HTML?
-                </h4>
-                <div class="options">
-                   <button data-Option="a">
-                        <span>a</span>
-                        <p>&lt;checkbox&gt;</p>
-                   </button>
-                   <button data-Option="b">
-                        <span>b</span>
-                        <p>Server-Sent Events (SSE) is a recent HTML5 specification dose not consume bandwidth compared to traditional polling methods.</p>
-                   </button>
-                    <button data-Option="c" data-selectred="true">
-                        <span>c</span>
-                        <p>Server-Sent Events (SSE) is a recent HTML5 specification dose not consume bandwidth compared to traditional polling methods.</p>
-                   </button>
-                    <button data-Option="d">
-                        <span>d</span>
-                        <p>Server-Sent Events (SSE) is a recent HTML5 specification dose not consume bandwidth compared to traditional polling methods.</p>
-                   </button>
-                </div>
-            </section>
-            <footer class="quizBox-footer">
-                <div data-question-remaning>
-                    <h4>
-                        <span id="remanng__que" >1</span>
+                    <span id="remanng__que">1</span>
                     of
                     <span id="totle__que">20</span>
                     question
-                    </h4>
-                </div>
-                <button id="next__que">next que</button>
-            </footer>
-        </div>
-    </section>
+                </h4>
+            </div>
+            <button id="next__que">next que</button>
+        </footer>
+    </template>
 </body>
 
 </html>

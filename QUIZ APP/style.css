@@ -120,13 +120,26 @@ button[data-timeLeft] span.none {
     font-size: 1.1rem;
     padding-block: 1rem;
 }
+
 .quizBox-body div.options {
     display: flex;
     flex-direction: column;
     padding-block: .5rem;
 }
 
-.quizBox-body div.options button[data-Option] {
+.quizBox-body div.options label[data-Option] input[type="radio"] {
+    appearance: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transition: .4s linear ease;
+
+    /* padding: 4px !important; */
+}
+
+.quizBox-body div.options label[data-Option] {
     display: flex;
     margin-block: .5rem;
     align-items: center;
@@ -142,9 +155,24 @@ button[data-timeLeft] span.none {
     background-color: rgba(7, 156, 255, 0.11);
     text-align: left;
     gap: 1rem;
+    transition: .4s linear ease;
+    position: relative;
 }
-.quizBox-body div.options button[data-Option] span {
-    --bg-q:#007bff;
+
+.quizBox-body div.options label[data-Option]:has(input[type="radio"]:checked) {
+    --bg-qa: #007bff;
+    background-color: var(--bg-qa);
+    color: #fff;
+}
+
+.quizBox-body div.options label[data-Option]:has(input[type="radio"]:checked) span {
+    background: #fff;
+    color: #000;
+    border: 2px solid #fff;
+}
+
+.quizBox-body div.options label[data-Option] span {
+    --bg-q: #007bff;
     font-weight: var(--fw-900);
     border: 2px solid var(--bg-q);
     background-color: var(--bg-q);
@@ -155,15 +183,58 @@ button[data-timeLeft] span.none {
     padding: 0 .3rem;
     color: #fff;
 }
-.quizBox-body div.options button[data-selectred="true"] {
-    border-color: var(--bg-q);
-    background-color: var(--bg-q);
-    color: #f3f2f2;
+
+.quizBox-body div.options label[data-Option]:hover {
+    --bg-qa: #007bff;
+    background: var(--bg-qa);
+    color: #fff;
 }
-.quizBox-body div.options button[data-selectred="true"] span {
-     --bg-q:#ffffff;
-     color: #000;
+
+.quizBox-body div.options label[data-Option]:hover span {
+    --bg-qa: #007bff;
+    --bg-q: #fff;
+    color: #000;
 }
+
+.quizBox .startQuiz {
+    font-family: var(--font-roboto);
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+    gap: 1rem;
+}
+.quizBox .startQuiz p {
+    font-size: 1rem;
+    color: rgb(63, 63, 63);
+}
+.quizBox .startQuiz button {
+        --bg-btn: rgb(0, 89, 255);
+    font-family: var(--font-roboto);
+    padding: .5rem 1rem;
+    background-color: var(--bg-btn);
+    border: 1px solid var(--bg-btn);
+    border-radius: .3rem;
+    color: #ffffff;
+    font-size: .90rem;
+    text-transform: capitalize;
+    display: flex;
+    gap: .3rem;
+    /* justify-content: center; */
+    align-items: center;
+    font-weight: var(--fw-500);
+    transition: .3s linear ease;
+    position: relative;
+}
+.quizBox .startQuiz button:hover {
+     --bg-btn: rgb(8, 65, 170);
+    background: var(--bg-btn);
+}
+
+
 /* TODO main section or que container */
 /* TODO footer */
 .quizBox-footer {
