@@ -13,6 +13,7 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 
 </head>
 
@@ -22,22 +23,22 @@
             <div class="startQuiz">
                 <h1> Welcome to Awesome Quiz! App </h1>
                 <p>Are you ready to start? </p>
-                <button> I'm ready</button>
+                <button id="btn-start"> I'm ready</button>
             </div>
         </div>
     </section>
 
 
-    <template>
+    <template data-TemplateContainer>
         <header class="quizBox-header">
             <h2>Quiz Application</h2>
 
             <button data-timeLeft=""> time Left
-                <span class="">000</span>
+                <span class="">00</span>
             </button>
         </header>
         <div class="progress" data-progress="true"></div>
-        <section class="quizBox-body">
+        <section class="quizBox-body" data-quizBody>
             <h4>
                 <span data-question-before>Q1:</span>
                 Which tag is used to create a checkbox in HTML?
@@ -71,9 +72,9 @@
         <footer class="quizBox-footer">
             <div data-question-remaning>
                 <h4>
-                    <span id="remanng__que">1</span>
+                    <span id="remanng__que"></span>
                     of
-                    <span id="totle__que">20</span>
+                    <span id="totle__que"></span>
                     question
                 </h4>
             </div>

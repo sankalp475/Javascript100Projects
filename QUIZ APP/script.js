@@ -446,4 +446,93 @@ const QUESTIONS = [
     }
 ]
 
+const startBtn = document.querySelector("#btn-start");
+const quizBox = document.querySelector("[ data-guizBox]");
+let default_que = 0;
 
+startBtn.addEventListener("click", () => {
+
+    const Template = document.querySelector("[data-TemplateContainer]");
+    const content = templateInnerHtml(Template);
+
+
+    genrateQuiz(quizBox, content);
+
+})
+
+
+function genrateQuiz(quizBox, content) {
+
+    if ((quizBox == undefined) || (content == undefined)) return;
+
+    const timeBox = content.querySelector(".quizBox-header > button:nth-child(2) span")
+    startTimer(timeBox);
+
+    const progressBox = content.querySelector(".progress");
+    progressBox.style.setProperty("--progress_value", trackProgress());
+
+    genrateQuestion(content, default_que);
+
+    const nextQue = content.querySelector("#next__que");
+    const QueRemaning = content.querySelector("[data-question-remaning]");
+    const rq = QueRemaning.querySelector("#remanng__que");
+    const tq = QueRemaning.querySelector("#totle__que");
+
+    rq.innerHTML = default_que;
+    tq.innerHTML = QUESTIONS.length;
+
+    nextQue.addEventListener("click", function () {
+        nextQueEventHandler(rq, progressBox, function () {
+           genrateQuestion(content, default_que);
+        });
+    });
+
+    quizBox.innerHTML = "";
+    quizBox.appendChild(content);
+}
+
+
+function nextQueEventHandler(remaningQue, progressBox, callback) {
+    if(remaningQue == undefined || progressBox == undefined || callback == undefined ) return;
+
+   if(default_que < QUESTIONS.length) ++default_que;
+   remaningQue.innerHTML = default_que;
+   
+   progressBox.style.setProperty("--progress_value", 
+   trackProgress({ type: "calculateProgress" }, default_que));
+
+   callback();
+}
+
+function genrateQuestion(content, index) {
+   if (content == undefined) return;
+
+   const heading  = content.querySelector("[data-quizBody] > h4");
+   const q = QUESTIONS[index];
+      console.log(QUESTIONS[index])
+}
+
+function trackProgress({ type = "default" } = {}, IndexValue) {
+    if (type == "default") return `0%`;
+
+    if (type == "calculateProgress" && IndexValue == undefined) return;
+
+    if (type == "calculateProgress") return `${(IndexValue / QUESTIONS.length) * 100}%`;
+}
+
+function templateInnerHtml(Template) {
+    if (!(Template instanceof Object)) return;
+    const cloneNode = Template.content.cloneNode(true);
+
+    return cloneNode;
+}
+
+function startTimer(TimerBox) {
+    if (!TimerBox) return;
+    let x = 20;
+    const i = setInterval(() => {
+        if (x == 0) clearInterval(i);
+        TimerBox.innerHTML = x;
+        x--;
+    }, 1000);
+}
