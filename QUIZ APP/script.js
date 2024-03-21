@@ -478,21 +478,31 @@ function genrateQuiz(quizBox, content, uniqueNumber) {
     genrateQuestion(content, uniqueNumber);
 
 
-    // const QueRemaning = content.querySelector("[data-question-remaning]");
-    // const rq = QueRemaning.querySelector("#remanng__que");
-    // const tq = QueRemaning.querySelector("#totle__que");
+    const QueRemaning = content.querySelector("[data-question-remaning]");
+    const rq = QueRemaning.querySelector("#remanng__que");
+    const tq = QueRemaning.querySelector("#totle__que");
 
-    // rq.innerHTML = defaultQue;
-    // tq.innerHTML = QUESTIONS.length;
+    // rq.innerHTML =  (defaultQue == 0) ? defaultQue :  (defaultQue < QUESTIONS.length)? ++defaultQue : defaultQue;
+
+    if(defaultQue == 0) {
+        rq.innerHTML = defaultQue;
+    }
+    if (defaultQue < QUESTIONS.length) ++defaultQue;
+     rq.innerHTML = defaultQue;
+     
+    tq.innerHTML = QUESTIONS.length;
 
     const nextQue = content.querySelector("#next__que");
-    nextQue.addEventListener("click", function () {
+    nextQue.addEventListener("click", () => {
 
-        // nextQueEventHandler(rq, progressBox, content, function () {
-        //     genrateQuestion(content, uniqueNumber, heading);
-        // });
+        const Template = document.querySelector("[data-TemplateContainer]");
+        const content = templateInnerHtml(Template);
+        let uniqueNumber = uniqueRandomNumber(20);
 
-        console.log("click")
+        genrateQuiz(quizBox, content, uniqueNumber);
+        
+        // nextQueEventHandler(QueRemaning, progressBox);
+
     });
 
     quizBox.innerHTML = "";
@@ -502,18 +512,16 @@ function genrateQuiz(quizBox, content, uniqueNumber) {
 
 
 
-function nextQueEventHandler(remaningQue, progressBox, content, callback) {
+function nextQueEventHandler(remaningQue, progressBox) {
     if (remaningQue == undefined || progressBox == undefined || callback == undefined) return;
 
     if (defaultQue < QUESTIONS.length) ++defaultQue;
     remaningQue.innerHTML = defaultQue;
 
-    //   console.log(content)
 
     progressBox.style.setProperty("--progress_value",
         trackProgress({ type: "calculateProgress" }, defaultQue));
 
-    callback();
 }
 
 
@@ -532,65 +540,59 @@ function genrateQuestion(content, __uniqueNumber) {
     __heading.innerHTML = `
       <span data-question-before>Q${queCount++}:</span>${que}
     `
-    
 
-    alllabels.forEach( (labels, index)  => {
-        console.log()
-        labels.querySelector("p").innerHTML = Object.values(QUESTIONS[queObject.index].answers)[index];
+
+    alllabels.forEach((labels, index) => {
+
+        const options = labels.querySelector("p")
+        options.innerHTML = Object.values(QUESTIONS[queObject.index].answers)[index];
+        labels.setAttribute(
+            "data-answers",
+            Object.keys(QUESTIONS[queObject.index].answers)[index]
+        )
+
+        const inputRaios = labels.querySelector("input[type='radio']");
+
+        inputRaios.addEventListener("click", (e) => {
+            const selectedAns = labels.getAttribute("data-answers");
+            const answer = QUESTIONS[queObject.index].correct_answer;
+
+
+            if (selectedAns == answer) {
+                labels.setAttribute(
+                    "style", `
+                    background-color: hsl(106.9, 94.4%, 42%);
+                    border-color: hsl(107, 82.7%, 33.9%);
+                    color: #000;
+                 `
+                )
+                alllabels.forEach(labels => {
+                    labels.setAttribute("disabled", true)
+                    e.target.closest("label").removeAttribute("disabled")
+                })
+            }
+
+            if (selectedAns != answer) {
+                labels.setAttribute(
+                    "style", `
+                    background-color: hsl(348, 100%, 61%);
+                    border-color:hsl(0, 85.1%, 34.3%);
+                    color: #000;
+                 `
+                )
+                alllabels.forEach(labels => {
+                    // console.log(labels.classList[0])
+                    labels.setAttribute("disabled", true)
+                    e.target.closest("label").removeAttribute("disabled");
+                    e.target.closest("label").setAttribute("wrong", true);
+                    if (labels.classList[0] == answer) {
+                        labels.removeAttribute("disabled")
+                        labels.setAttribute("correct", true)
+                    }
+                })
+            }
+        })
     });
-
-
-
-    // allOptions.forEach(radioInput => {
-    //     radioInput.addEventListener("click", (e) => {
-    //         let pElement = e.target.closest("label").querySelector("p");
-
-    //         let selected = Object.values(pElement.dataset)[0];
-    //         let answer = QUESTIONS[queObject.index].correct_answer;
-
-    //         // console.log(answer)
-
-    //         // if (selected == answer) {
-    //         //     pElement.closest("label").setAttribute(
-    //         //         "style", `
-    //         //         background-color: hsl(106.9, 94.4%, 42%);
-    //         //         border-color: hsl(107, 82.7%, 33.9%);
-    //         //         color: #000;
-    //         //      `
-    //         //     )
-
-    //         //     alllabels.forEach(labels => {
-    //         //         labels.setAttribute("disabled", true)
-    //         //         e.target.closest("label").removeAttribute("disabled")
-    //         //     })
-    //         // }
-
-    //         // if (selected != answer) {
-    //         //     pElement.closest("label").setAttribute(
-    //         //         "style", `
-    //         //         background-color: hsl(348, 100%, 61%);
-    //         //         border-color:hsl(0, 85.1%, 34.3%);
-    //         //         color: #000;
-    //         //      `
-    //         //     )
-    //         //     alllabels.forEach(labels => {
-    //         //         // console.log(labels.classList[0])
-    //         //         labels.setAttribute("disabled", true)
-    //         //         e.target.closest("label").removeAttribute("disabled");
-    //         //         e.target.closest("label").setAttribute("wrong",true);
-    //         //         if(labels.classList[0] == answer) {
-    //         //             labels.removeAttribute("disabled")
-    //         //             labels.setAttribute("correct", true)
-    //         //         }
-    //         //     })
-    //         // }
-
-
-    //     })
-    //     // console.log()
-    // });
-
-
 }
 
 
