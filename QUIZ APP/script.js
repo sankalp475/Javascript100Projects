@@ -448,22 +448,26 @@ const QUESTIONS = [
 
 const startBtn = document.querySelector("#btn-start");
 const quizBox = document.querySelector("[ data-guizBox]");
-let default_que = 0;
+let defaultQue = 0;
+
+
+
+// console.log(x());
 
 startBtn.addEventListener("click", () => {
 
     const Template = document.querySelector("[data-TemplateContainer]");
     const content = templateInnerHtml(Template);
+    let uniqueNumber = uniqueRandomNumber(20);
 
-
-    genrateQuiz(quizBox, content);
+    genrateQuiz(quizBox, content, uniqueNumber);
 
 })
 
 
-function genrateQuiz(quizBox, content) {
+function genrateQuiz(quizBox, content, uniqueNumber) {
 
-    if ((quizBox == undefined) || (content == undefined)) return;
+    if ((quizBox == undefined) || (content == undefined) || (uniqueNumber == undefined)) return;
 
     const timeBox = content.querySelector(".quizBox-header > button:nth-child(2) span")
     startTimer(timeBox);
@@ -471,20 +475,24 @@ function genrateQuiz(quizBox, content) {
     const progressBox = content.querySelector(".progress");
     progressBox.style.setProperty("--progress_value", trackProgress());
 
-    genrateQuestion(content, default_que);
+    genrateQuestion(content, uniqueNumber);
+
+
+    // const QueRemaning = content.querySelector("[data-question-remaning]");
+    // const rq = QueRemaning.querySelector("#remanng__que");
+    // const tq = QueRemaning.querySelector("#totle__que");
+
+    // rq.innerHTML = defaultQue;
+    // tq.innerHTML = QUESTIONS.length;
 
     const nextQue = content.querySelector("#next__que");
-    const QueRemaning = content.querySelector("[data-question-remaning]");
-    const rq = QueRemaning.querySelector("#remanng__que");
-    const tq = QueRemaning.querySelector("#totle__que");
-
-    rq.innerHTML = default_que;
-    tq.innerHTML = QUESTIONS.length;
-
     nextQue.addEventListener("click", function () {
-        nextQueEventHandler(rq, progressBox, function () {
-           genrateQuestion(content, default_que);
-        });
+
+        // nextQueEventHandler(rq, progressBox, content, function () {
+        //     genrateQuestion(content, uniqueNumber, heading);
+        // });
+
+        console.log("click")
     });
 
     quizBox.innerHTML = "";
@@ -492,25 +500,100 @@ function genrateQuiz(quizBox, content) {
 }
 
 
-function nextQueEventHandler(remaningQue, progressBox, callback) {
-    if(remaningQue == undefined || progressBox == undefined || callback == undefined ) return;
 
-   if(default_que < QUESTIONS.length) ++default_que;
-   remaningQue.innerHTML = default_que;
-   
-   progressBox.style.setProperty("--progress_value", 
-   trackProgress({ type: "calculateProgress" }, default_que));
 
-   callback();
+function nextQueEventHandler(remaningQue, progressBox, content, callback) {
+    if (remaningQue == undefined || progressBox == undefined || callback == undefined) return;
+
+    if (defaultQue < QUESTIONS.length) ++defaultQue;
+    remaningQue.innerHTML = defaultQue;
+
+    //   console.log(content)
+
+    progressBox.style.setProperty("--progress_value",
+        trackProgress({ type: "calculateProgress" }, defaultQue));
+
+    callback();
 }
 
-function genrateQuestion(content, index) {
-   if (content == undefined) return;
 
-   const heading  = content.querySelector("[data-quizBody] > h4");
-   const q = QUESTIONS[index];
-      console.log(QUESTIONS[index])
+
+let queCount = 1;
+function genrateQuestion(content, __uniqueNumber) {
+    if (content == undefined) return;
+
+    const __heading = content.querySelector("[data-quizBody] h4");
+    const allOptions = content.querySelectorAll("[data-quizBody] .options > label > input[type=\"radio\"]");
+    const alllabels = content.querySelectorAll("[data-quizBody] .options > label");
+    const __options = content.querySelectorAll("[data-quizBody] .options > label > [data-Options]")
+    const queObject = __uniqueNumber();
+    let que = QUESTIONS[queObject.index].question
+
+    __heading.innerHTML = `
+      <span data-question-before>Q${queCount++}:</span>${que}
+    `
+    
+
+    alllabels.forEach( (labels, index)  => {
+        console.log()
+        labels.querySelector("p").innerHTML = Object.values(QUESTIONS[queObject.index].answers)[index];
+    });
+
+
+
+    // allOptions.forEach(radioInput => {
+    //     radioInput.addEventListener("click", (e) => {
+    //         let pElement = e.target.closest("label").querySelector("p");
+
+    //         let selected = Object.values(pElement.dataset)[0];
+    //         let answer = QUESTIONS[queObject.index].correct_answer;
+
+    //         // console.log(answer)
+
+    //         // if (selected == answer) {
+    //         //     pElement.closest("label").setAttribute(
+    //         //         "style", `
+    //         //         background-color: hsl(106.9, 94.4%, 42%);
+    //         //         border-color: hsl(107, 82.7%, 33.9%);
+    //         //         color: #000;
+    //         //      `
+    //         //     )
+
+    //         //     alllabels.forEach(labels => {
+    //         //         labels.setAttribute("disabled", true)
+    //         //         e.target.closest("label").removeAttribute("disabled")
+    //         //     })
+    //         // }
+
+    //         // if (selected != answer) {
+    //         //     pElement.closest("label").setAttribute(
+    //         //         "style", `
+    //         //         background-color: hsl(348, 100%, 61%);
+    //         //         border-color:hsl(0, 85.1%, 34.3%);
+    //         //         color: #000;
+    //         //      `
+    //         //     )
+    //         //     alllabels.forEach(labels => {
+    //         //         // console.log(labels.classList[0])
+    //         //         labels.setAttribute("disabled", true)
+    //         //         e.target.closest("label").removeAttribute("disabled");
+    //         //         e.target.closest("label").setAttribute("wrong",true);
+    //         //         if(labels.classList[0] == answer) {
+    //         //             labels.removeAttribute("disabled")
+    //         //             labels.setAttribute("correct", true)
+    //         //         }
+    //         //     })
+    //         // }
+
+
+    //     })
+    //     // console.log()
+    // });
+
+
 }
+
+
 
 function trackProgress({ type = "default" } = {}, IndexValue) {
     if (type == "default") return `0%`;
@@ -520,12 +603,14 @@ function trackProgress({ type = "default" } = {}, IndexValue) {
     if (type == "calculateProgress") return `${(IndexValue / QUESTIONS.length) * 100}%`;
 }
 
+
 function templateInnerHtml(Template) {
     if (!(Template instanceof Object)) return;
     const cloneNode = Template.content.cloneNode(true);
 
     return cloneNode;
 }
+
 
 function startTimer(TimerBox) {
     if (!TimerBox) return;
@@ -536,3 +621,30 @@ function startTimer(TimerBox) {
         x--;
     }, 1000);
 }
+
+
+function uniqueRandomNumber(maxRange) {
+    const ranNums = [];
+
+
+    for (let i = 0; i <= maxRange * 6; i++) {
+        let random = Math.floor(Math.random() * maxRange);
+        ranNums.push(random);
+    }
+    const unique = [...new Set(ranNums)];
+    return function selectUnique() {
+        // console.log(new Set(ranNums), unique);
+        let newRandom = Math.floor(Math.random() * unique.length);
+        // console.log(newRandom)
+        const index = unique.indexOf(unique[newRandom]);
+        const number = unique[newRandom];
+
+        if (index > -1) {
+            unique.splice(index, 1);
+        }
+        return { index: number, };
+    }
+}
+
+
+

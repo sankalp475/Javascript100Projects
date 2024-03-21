@@ -165,23 +165,36 @@ button[data-timeLeft] span.none {
     color: #fff;
 }
 
+
+/* .quizBox-body div.options label[data-OptionCorrect="true"] {
+   background-color: hsl(171, 100%, 41%);
+   border-color: hsl(171, 100%, 41%);
+}
+.quizBox-body div.options label[data-OptionIncorrect="true"]:has(input[type="radio"]:checked) {
+   background-color: hsl(348, 100%, 61%);
+   border-color: hsl(348, 100%, 61%);
+   color: #fff;
+} */
+
+
+
 .quizBox-body div.options label[data-Option]:has(input[type="radio"]:checked) span {
     background: #fff;
-    color: #000;
+    color: #000 !important;
     border: 2px solid #fff;
 }
 
 .quizBox-body div.options label[data-Option] span {
-    --bg-q: #007bff;
+    --bg-qa: #007bff;
     font-weight: var(--fw-900);
-    border: 2px solid var(--bg-q);
-    background-color: var(--bg-q);
+    border: 2px solid var(--bg-qa);
+    background-color: var(--bg-qa);
     border-radius: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0 .3rem;
-    color: #fff;
+    color: #fff !important;
 }
 
 .quizBox-body div.options label[data-Option]:hover {
@@ -190,10 +203,43 @@ button[data-timeLeft] span.none {
     color: #fff;
 }
 
-.quizBox-body div.options label[data-Option]:hover span {
-    --bg-qa: #007bff;
-    --bg-q: #fff;
+.quizBox-body div.options label[disabled] {
+    pointer-events: none;
+    filter: grayscale(1);
+    /* cursor:; */
+}
+
+.quizBox-body div.options label[wrong] {
+    background-color: hsl(348, 100%, 50%);
+    border-color: hsl(0, 94%, 38%);
+
+    pointer-events: none;
+}
+
+.quizBox-body div.options label[wrong] span {
+    background: #fff !important;
+    color: #000 !important;
+    border-color: #fff !important;
+}
+
+.quizBox-body div.options label[correct] {
+    background-color: hsl(106.9, 94.4%, 42%);
+    border-color: hsl(107, 82.7%, 33.9%);
     color: #000;
+    pointer-events: none;
+}
+
+.quizBox-body div.options label[correct] span {
+    background: #fff !important;
+    color: #000 !important;
+    border-color: #fff !important;
+}
+
+
+
+.quizBox-body div.options label[data-Option]:hover span {
+    --bg-qa: #ffffff;
+    color: #000 !important;
 }
 
 .quizBox .startQuiz {
@@ -207,12 +253,14 @@ button[data-timeLeft] span.none {
     padding: 1rem;
     gap: 1rem;
 }
+
 .quizBox .startQuiz p {
     font-size: 1rem;
     color: rgb(63, 63, 63);
 }
+
 .quizBox .startQuiz button {
-        --bg-btn: rgb(0, 89, 255);
+    --bg-btn: rgb(0, 89, 255);
     font-family: var(--font-roboto);
     padding: .5rem 1rem;
     background-color: var(--bg-btn);
@@ -229,8 +277,9 @@ button[data-timeLeft] span.none {
     transition: .3s linear ease;
     position: relative;
 }
+
 .quizBox .startQuiz button:hover {
-     --bg-btn: rgb(8, 65, 170);
+    --bg-btn: rgb(8, 65, 170);
     background: var(--bg-btn);
 }
 
