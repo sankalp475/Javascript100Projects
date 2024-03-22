@@ -209,6 +209,13 @@ button[data-timeLeft] span.none {
     /* cursor:; */
 }
 
+/* .quizBox-body h4[disabled="true"] {
+     pointer-events: none;
+    filter: grayscale(1);
+} */
+
+
+
 .quizBox-body div.options label[wrong] {
     background-color: hsl(348, 100%, 50%);
     border-color: hsl(0, 94%, 38%);
@@ -283,6 +290,62 @@ button[data-timeLeft] span.none {
     background: var(--bg-btn);
 }
 
+
+.quizBox .endQuiz {
+    font-family: var(--font-roboto);
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.quizBox .endQuiz h4.score {
+    font-family: var(--font-roboto);
+    font-size: 1.3rem;
+    color: rgb(104, 104, 104);
+}
+
+.quizBox .endQuiz h4.score > span[data-scoregained] {
+    color: #000 !important;
+}
+
+
+.quizBox .endQuiz h4.score > span[data-scoreTotle] {
+    color: #000 !important;
+}
+
+.quizBox .endQuiz div.buttons-container  {
+    display: flex;
+    gap: 2rem;
+}
+
+.quizBox .endQuiz div.buttons-container #btn-start ,
+.quizBox .endQuiz div.buttons-container #btn-quit {
+    --bg-btn: rgb(0, 89, 255);
+    font-family: var(--font-roboto);
+    padding: .5rem 1rem;
+    background-color: var(--bg-btn);
+    border: 1px solid var(--bg-btn);
+    border-radius: .3rem;
+    color: #ffffff;
+    font-size: .90rem;
+    text-transform: capitalize;
+    display: flex;
+    gap: .3rem;
+    /* justify-content: center; */
+    align-items: center;
+    font-weight: var(--fw-500);
+    transition: 0.3s ease-in-out;
+}
+
+.quizBox .endQuiz div.buttons-container #btn-start:hover, 
+.quizBox .endQuiz div.buttons-container #btn-quit:hover {
+    --bg-btn: rgb(6, 62, 165);
+}
 
 /* TODO main section or que container */
 /* TODO footer */

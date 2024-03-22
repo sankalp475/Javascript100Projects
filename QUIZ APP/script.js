@@ -446,17 +446,17 @@ const QUESTIONS = [
     }
 ]
 
+
 const startBtn = document.querySelector("#btn-start");
 const quizBox = document.querySelector("[ data-guizBox]");
-let defaultQue = 0;
+let queCount = 0;
+let questionCount = 0;
+const Template = document.querySelector("[data-TemplateContainer]");
 
-
-
-// console.log(x());
 
 startBtn.addEventListener("click", () => {
 
-    const Template = document.querySelector("[data-TemplateContainer]");
+
     const content = templateInnerHtml(Template);
     let uniqueNumber = uniqueRandomNumber(20);
 
@@ -472,90 +472,103 @@ function genrateQuiz(quizBox, content, uniqueNumber) {
     const timeBox = content.querySelector(".quizBox-header > button:nth-child(2) span")
     startTimer(timeBox);
 
+
     const progressBox = content.querySelector(".progress");
     progressBox.style.setProperty("--progress_value", trackProgress());
 
-    genrateQuestion(content, uniqueNumber);
+    genrateContent(content, uniqueNumber);
 
 
     const QueRemaning = content.querySelector("[data-question-remaning]");
-    const rq = QueRemaning.querySelector("#remanng__que");
-    const tq = QueRemaning.querySelector("#totle__que");
+    const remaning = QueRemaning.querySelector("#remanng__que");
+    const totle = QueRemaning.querySelector("#totle__que");
 
-    // rq.innerHTML =  (defaultQue == 0) ? defaultQue :  (defaultQue < QUESTIONS.length)? ++defaultQue : defaultQue;
-
-    if(defaultQue == 0) {
-        rq.innerHTML = defaultQue;
-    }
-    if (defaultQue < QUESTIONS.length) ++defaultQue;
-     rq.innerHTML = defaultQue;
-     
-    tq.innerHTML = QUESTIONS.length;
+    remaning.innerHTML = questionCount;
+    totle.innerHTML = QUESTIONS.length;
 
     const nextQue = content.querySelector("#next__que");
-    nextQue.addEventListener("click", () => {
-
-        const Template = document.querySelector("[data-TemplateContainer]");
-        const content = templateInnerHtml(Template);
-        let uniqueNumber = uniqueRandomNumber(20);
-
-        genrateQuiz(quizBox, content, uniqueNumber);
-        
-        // nextQueEventHandler(QueRemaning, progressBox);
-
-    });
+    NextQueEventHandler(nextQue);
 
     quizBox.innerHTML = "";
     quizBox.appendChild(content);
 }
 
+function NextQueEventHandler(nextQue) {
 
 
 
-function nextQueEventHandler(remaningQue, progressBox) {
-    if (remaningQue == undefined || progressBox == undefined || callback == undefined) return;
 
-    if (defaultQue < QUESTIONS.length) ++defaultQue;
-    remaningQue.innerHTML = defaultQue;
+    nextQue.addEventListener("click", () => {
+
+        const content = templateInnerHtml(Template);
+        let uniqueNumber = uniqueRandomNumber(20);
+
+        const timeBox = document.querySelector(".quizBox-header > button:nth-child(2) span")
+        startTimer(timeBox);
 
 
-    progressBox.style.setProperty("--progress_value",
-        trackProgress({ type: "calculateProgress" }, defaultQue));
 
+        genrateContent(document, uniqueNumber);
+
+        const queCount_ = document.querySelector("[data-queCount]").innerHTML;
+        const progressBox = document.querySelector(".progress");
+        progressBox.style.setProperty(
+            "--progress_value",
+            trackProgress({ type: "calculateProgress" }, queCount_)
+        );
+
+        const remaning = document.querySelector("#remanng__que");
+        remaning.innerHTML = (queCount_ == QUESTIONS.length) ? queCount_ : queCount_ - 1;
+
+        if (queCount_ == QUESTIONS.length) {
+            let quizBox = document.querySelector("[data-guizBox]");
+            let _Template_ = document.querySelector("[data-endScreen]")
+            const content = templateInnerHtml(_Template_);
+
+            quizBox.innerHTML = ""
+            quizBox.appendChild(content)
+        }
+
+        const labels = document.querySelectorAll("label");
+
+        labels.forEach((label) => {
+            label.removeAttribute("wrong")
+            label.removeAttribute("correct")
+            label.removeAttribute("disabled")
+            label.removeAttribute("style")
+
+            let input = label.querySelectorAll("input[type=\"radio\"]");
+            input[0].checked = false;
+        })
+    })
 }
 
 
+function genrateContent(content, __uniqueNumber) {
 
-let queCount = 1;
-function genrateQuestion(content, __uniqueNumber) {
-    if (content == undefined) return;
+    const __queIndex = __uniqueNumber();
+    const quextion = QUESTIONS[__queIndex.index].question;
 
-    const __heading = content.querySelector("[data-quizBody] h4");
-    const allOptions = content.querySelectorAll("[data-quizBody] .options > label > input[type=\"radio\"]");
+    const __questoniBox = content.querySelector("[data-quizBody] h4");
+    __questoniBox.innerHTML = `
+      Q<span data-queCount>${queCount = (queCount < QUESTIONS.length) ? queCount + 1 : QUESTIONS.length
+        }</span> : ${quextion}`;
+
     const alllabels = content.querySelectorAll("[data-quizBody] .options > label");
-    const __options = content.querySelectorAll("[data-quizBody] .options > label > [data-Options]")
-    const queObject = __uniqueNumber();
-    let que = QUESTIONS[queObject.index].question
-
-    __heading.innerHTML = `
-      <span data-question-before>Q${queCount++}:</span>${que}
-    `
-
-
     alllabels.forEach((labels, index) => {
 
         const options = labels.querySelector("p")
-        options.innerHTML = Object.values(QUESTIONS[queObject.index].answers)[index];
+        options.innerHTML = Object.values(QUESTIONS[__queIndex.index].answers)[index];
         labels.setAttribute(
             "data-answers",
-            Object.keys(QUESTIONS[queObject.index].answers)[index]
+            Object.keys(QUESTIONS[__queIndex.index].answers)[index]
         )
 
         const inputRaios = labels.querySelector("input[type='radio']");
 
         inputRaios.addEventListener("click", (e) => {
             const selectedAns = labels.getAttribute("data-answers");
-            const answer = QUESTIONS[queObject.index].correct_answer;
+            const answer = QUESTIONS[__queIndex.index].correct_answer;
 
 
             if (selectedAns == answer) {
@@ -581,7 +594,6 @@ function genrateQuestion(content, __uniqueNumber) {
                  `
                 )
                 alllabels.forEach(labels => {
-                    // console.log(labels.classList[0])
                     labels.setAttribute("disabled", true)
                     e.target.closest("label").removeAttribute("disabled");
                     e.target.closest("label").setAttribute("wrong", true);
@@ -595,14 +607,34 @@ function genrateQuestion(content, __uniqueNumber) {
     });
 }
 
-
-
 function trackProgress({ type = "default" } = {}, IndexValue) {
     if (type == "default") return `0%`;
 
     if (type == "calculateProgress" && IndexValue == undefined) return;
 
     if (type == "calculateProgress") return `${(IndexValue / QUESTIONS.length) * 100}%`;
+}
+
+let timeInterval = null;
+function startTimer(timerContainer) {
+
+
+    if (!timerContainer) return;
+    if (timeInterval) clearInterval(timeInterval);
+    let totleTime = 20;
+    timeInterval = setInterval(() => {
+
+        if (totleTime == 0) {
+            document.querySelector("#next__que").click();
+            clearInterval(timeInterval);
+        }
+        timerContainer.innerHTML = totleTime;
+        totleTime--;
+
+        
+
+    }, 1000);
+
 }
 
 
@@ -612,18 +644,6 @@ function templateInnerHtml(Template) {
 
     return cloneNode;
 }
-
-
-function startTimer(TimerBox) {
-    if (!TimerBox) return;
-    let x = 20;
-    const i = setInterval(() => {
-        if (x == 0) clearInterval(i);
-        TimerBox.innerHTML = x;
-        x--;
-    }, 1000);
-}
-
 
 function uniqueRandomNumber(maxRange) {
     const ranNums = [];
@@ -635,9 +655,7 @@ function uniqueRandomNumber(maxRange) {
     }
     const unique = [...new Set(ranNums)];
     return function selectUnique() {
-        // console.log(new Set(ranNums), unique);
         let newRandom = Math.floor(Math.random() * unique.length);
-        // console.log(newRandom)
         const index = unique.indexOf(unique[newRandom]);
         const number = unique[newRandom];
 
@@ -647,6 +665,4 @@ function uniqueRandomNumber(maxRange) {
         return { index: number, };
     }
 }
-
-
 
