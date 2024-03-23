@@ -445,11 +445,52 @@ const QUESTIONS = [
         "difficulty": "Easy"
     }
 ]
+const setObject = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+const getObject = (key) => {
+    const value = localStorage.getItem(key)
+    return value && JSON.parse(value);
+}
+function CreateObject(__ObjectArgs) {
+
+    if (!(__ObjectArgs instanceof Object)) return;
+    const { __wrongAnswer, __skiped, __correctAnswer } = __ObjectArgs;
+
+    this.__wrongAnswer = __wrongAnswer;
+    this.__correctAnswer = __correctAnswer;
+    this.__skiped = __skiped;
+    this.updateValue = function (key) {
+
+        if (key == null) return;
+
+
+        if (key === "correct_answer") ++this.__correctAnswer;
+        if (key === "wrong_answer") ++this.__wrongAnswer;
+        if (key === "skiped_answer") ++this.__wrongAnswer;
+
+    }
+
+}
+function useScore() {
+
+    const myobject = new CreateObject({
+        __correctAnswer: 0,
+        __wrongAnswer: 0,
+        __skiped: 0,
+    })
+
+    // myobject.updateValue("correct_answer");
+
+    setObject("scoreObject", myobject);
+    const score = getObject("scoreObject");
+    return (score) ? {score, udate: myobject.updateValue } : setObject("scoreObject", myobject);
+}
 
 
 const startBtn = document.querySelector("#btn-start");
 const quizBox = document.querySelector("[ data-guizBox]");
-let queCount = 0;
+let queCount_ = 0;
 let questionCount = 0;
 const Template = document.querySelector("[data-TemplateContainer]");
 
@@ -464,16 +505,19 @@ startBtn.addEventListener("click", () => {
 function genrateQuiz(quizBox, content, uniqueNumber) {
 
     if (
-        (quizBox == undefined) || 
-        (content == undefined) || 
+        (quizBox == undefined) ||
+        (content == undefined) ||
         (uniqueNumber == undefined)
     ) return;
     const timeBox = content.querySelector(".quizBox-header > button:nth-child(2) span")
-    startTimer(timeBox);
+    if (queCount_ != QUESTIONS.length) {
+        startTimer(timeBox);
+    }
 
 
     const progressBox = content.querySelector(".progress");
     progressBox.style.setProperty("--progress_value", trackProgress());
+
     let __queIndex = uniqueNumber();
     generateContent(content, __queIndex.index, QUESTIONS[__queIndex.index]);
     // generateContent(content, uniqueNumber);
@@ -486,123 +530,60 @@ function genrateQuiz(quizBox, content, uniqueNumber) {
     remaning.innerHTML = questionCount;
     totle.innerHTML = QUESTIONS.length;
 
-    // const nextQue = content.querySelector("#next__que");
-    // NextQueEventHandler(nextQue);
+    const nextQue = content.querySelector("#next__que");
+    NextQueEventHandler(nextQue);
 
     quizBox.innerHTML = "";
     quizBox.appendChild(content);
 }
 
-// function NextQueEventHandler(nextQue) {
+function NextQueEventHandler(nextQue) {
 
-//     nextQue.addEventListener("click", () => {
+    nextQue.addEventListener("click", () => {
 
-//         const content = templateInnerHtml(Template);
-//         let uniqueNumber = uniqueRandomNumber(20);
+        const content = templateInnerHtml(Template);
+        let uniqueNumber = uniqueRandomNumber(20);
 
-//         const timeBox = document.querySelector(".quizBox-header > button:nth-child(2) span")
-//         startTimer(timeBox);
+        const timeBox = document.querySelector(".quizBox-header > button:nth-child(2) span")
+        if (queCount_ != QUESTIONS.length) startTimer(timeBox);
 
+        let __queIndex = uniqueNumber();
+        generateContent(document, __queIndex.index, QUESTIONS[__queIndex.index]);
 
+        const progressBox = document.querySelector(".progress");
+        progressBox.style.setProperty(
+            "--progress_value",
+            trackProgress({ type: "calculateProgress" }, queCount_)
+        );
 
-//         genrateContent(document, uniqueNumber);
+        const remaning = document.querySelector("#remanng__que");
+        remaning.innerHTML = (queCount_ == QUESTIONS.length) ? queCount_ : queCount_ - 1;
 
-//         const queCount_ = document.querySelector("[data-queCount]").innerHTML;
-//         const progressBox = document.querySelector(".progress");
-//         progressBox.style.setProperty(
-//             "--progress_value",
-//             trackProgress({ type: "calculateProgress" }, queCount_)
-//         );
+        if (queCount_ == QUESTIONS.length) {
+            let quizBox = document.querySelector("[data-guizBox]");
+            let _Template_ = document.querySelector("[data-endScreen]")
+            const content = templateInnerHtml(_Template_);
 
-//         const remaning = document.querySelector("#remanng__que");
-//         remaning.innerHTML = (queCount_ == QUESTIONS.length) ? queCount_ : queCount_ - 1;
+            quizBox.innerHTML = ""
+            quizBox.appendChild(content)
+            // startTimer();
+        }
 
-//         if (queCount_ == QUESTIONS.length) {
-//             let quizBox = document.querySelector("[data-guizBox]");
-//             let _Template_ = document.querySelector("[data-endScreen]")
-//             const content = templateInnerHtml(_Template_);
+        const labels = document.querySelectorAll("label");
 
-//             quizBox.innerHTML = ""
-//             quizBox.appendChild(content)
-//         }
+        labels.forEach((label) => {
+            label.removeAttribute("wrong")
+            label.removeAttribute("correct")
+            label.removeAttribute("disabled")
+            label.removeAttribute("style")
 
-//         const labels = document.querySelectorAll("label");
-
-//         labels.forEach((label) => {
-//             label.removeAttribute("wrong")
-//             label.removeAttribute("correct")
-//             label.removeAttribute("disabled")
-//             label.removeAttribute("style")
-
-//             let input = label.querySelectorAll("input[type=\"radio\"]");
-//             input[0].checked = false;
-//         })
-//     })
-// }
-
-
-// function generateContent(content, __uniqueNumber) {
-
-//     const __queIndex = __uniqueNumber();
-//     const quextion = QUESTIONS[__queIndex.index].question;
-
-//     const __questoniBox = content.querySelector("[data-quizBody] h4");
-//     __questoniBox.innerHTML = `
-//       Q<span data-queCount>${queCount = (queCount < QUESTIONS.length) ? queCount + 1 : QUESTIONS.length
-//         }</span> : ${quextion}`;
-
-//     const alllabels = content.querySelectorAll("[data-quizBody] .options > label");
-//     alllabels.forEach((labels, index) => {
-
-//         const options = labels.querySelector("p")
-//         options.innerHTML = Object.values(QUESTIONS[__queIndex.index].answers)[index];
-//         labels.setAttribute(
-//             "data-answers",
-//             Object.keys(QUESTIONS[__queIndex.index].answers)[index]
-//         )
-
-//         const inputRaios = labels.querySelector("input[type='radio']");
-
-//         inputRaios.addEventListener("click", (e) => {
-//             const selectedAns = labels.getAttribute("data-answers");
-//             const answer = QUESTIONS[__queIndex.index].correct_answer;
+            let input = label.querySelectorAll("input[type=\"radio\"]");
+            input[0].checked = false;
+        })
+    })
+}
 
 
-//             if (selectedAns == answer) {
-//                 labels.setAttribute(
-//                     "style", `
-//                     background-color: hsl(106.9, 94.4%, 42%);
-//                     border-color: hsl(107, 82.7%, 33.9%);
-//                     color: #000;
-//                  `
-//                 )
-//                 alllabels.forEach(labels => {
-//                     labels.setAttribute("disabled", true)
-//                     e.target.closest("label").removeAttribute("disabled")
-//                 })
-//             }
-
-//             if (selectedAns != answer) {
-//                 labels.setAttribute(
-//                     "style", `
-//                     background-color: hsl(348, 100%, 61%);
-//                     border-color:hsl(0, 85.1%, 34.3%);
-//                     color: #000;
-//                  `
-//                 )
-//                 alllabels.forEach(labels => {
-//                     labels.setAttribute("disabled", true)
-//                     e.target.closest("label").removeAttribute("disabled");
-//                     e.target.closest("label").setAttribute("wrong", true);
-//                     if (labels.classList[0] == answer) {
-//                         labels.removeAttribute("disabled")
-//                         labels.setAttribute("correct", true)
-//                     }
-//                 })
-//             }
-//         })
-//     });
-// }
 
 function trackProgress({ type = "default" } = {}, IndexValue) {
     if (type == "default") return `0%`;
@@ -613,23 +594,24 @@ function trackProgress({ type = "default" } = {}, IndexValue) {
 }
 
 let timeInterval = null;
-function startTimer(timerContainer) {
+function startTimer(timerContainer, isTimerNull) {
 
 
     if (!timerContainer) return;
     if (timeInterval) clearInterval(timeInterval);
     let totleTime = 20;
+
     timeInterval = setInterval(() => {
 
         if (totleTime == 0) {
-            document.querySelector("#next__que").click();
             clearInterval(timeInterval);
+            const nextQueBtn = document.querySelector("#next__que");
+            nextQueBtn.click();
         }
         timerContainer.innerHTML = totleTime;
         totleTime--;
 
     }, 1000);
-
 }
 
 
@@ -662,7 +644,7 @@ function uniqueRandomNumber(maxRange) {
 
 function generateContent(content, index, question) {
     const questionBox = content.querySelector("[data-quizBody] h4");
-    questionBox.innerHTML = `Q${++queCount}: ${question.question}`;
+    questionBox.innerHTML = `Q${++queCount_}: ${question.question}`;
 
     const labels = content.querySelectorAll("[data-quizBody] .options > label");
     labels.forEach((label, idx) => {
@@ -670,14 +652,18 @@ function generateContent(content, index, question) {
         const answerKey = `answer_${String.fromCharCode(97 + idx)}`;
         option.textContent = question.answers[answerKey];
         label.dataset.answer = answerKey;
-        const radio = label.querySelector("input[type='radio']")
-        radio.addEventListener("click", () => checkAnswer({ 
-               target: label,
-            }, 
-            answerKey, 
-            question.correct_answer, 
-            index
-        ));
+        const radio = label.querySelector("input[type='radio']");
+        // let x = 0
+        radio.addEventListener("click", () => {
+            checkAnswer(
+                { target: label },
+                answerKey,
+                question.correct_answer,
+                index
+            )
+
+            // console.log(++x)
+        })
     });
 }
 
@@ -688,9 +674,11 @@ function checkAnswer({ target, labels }, selectedAnswer, correctAnswer) {
     const Labels = Array.from(
         document.querySelectorAll("[data-quizBody] .options > label")
     ).filter(lbl => lbl.dataset.answer === correctAnswer && lbl !== target);
-    if (correct) target.setAttribute("correct", true) 
-    if(!correct) {
-        target.setAttribute("wrong",true)
+    if (correct) {
+        target.setAttribute("correct", true)
+    }
+    if (!correct) {
+        target.setAttribute("wrong", true)
         Labels.forEach(lbl => lbl.setAttribute("correct", true));
     }
     disableOptions(correct, target, Labels[0]);
@@ -701,17 +689,17 @@ function disableOptions(isCorrect, target, isCorrectElement) {
 
     labels.forEach(label => {
         label.setAttribute("disabled", true);
-        if(isCorrect) target.removeAttribute("disabled")
-        if(!isCorrect) {
+        if (isCorrect) target.removeAttribute("disabled")
+        if (!isCorrect) {
             target.removeAttribute("disabled");
-            target.setAttribute("wrong",true);
-            if( 
+            target.setAttribute("wrong", true);
+            if (
                 label.classList[0] == isCorrectElement.classList[0]
             ) {
                 label.removeAttribute("disabled")
                 isCorrectElement.setAttribute("correct", true)
             }
-            
+
         }
         let input = label.querySelectorAll("input[type=\"radio\"]");
         input[0].checked = false;
