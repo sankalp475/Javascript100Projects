@@ -445,47 +445,21 @@ const QUESTIONS = [
         "difficulty": "Easy"
     }
 ]
-const setObject = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
-}
-const getObject = (key) => {
-    const value = localStorage.getItem(key)
-    return value && JSON.parse(value);
-}
-function CreateObject(__ObjectArgs) {
 
-    if (!(__ObjectArgs instanceof Object)) return;
-    const { __wrongAnswer, __skiped, __correctAnswer } = __ObjectArgs;
+function ScoreBoard() {
 
-    this.__wrongAnswer = __wrongAnswer;
-    this.__correctAnswer = __correctAnswer;
-    this.__skiped = __skiped;
-    this.updateValue = function (key) {
-
-        if (key == null) return;
-
-
-        if (key === "correct_answer") ++this.__correctAnswer;
-        if (key === "wrong_answer") ++this.__wrongAnswer;
-        if (key === "skiped_answer") ++this.__wrongAnswer;
-
-    }
+    this.correctAnswer = 0,
+        this.wrongAnswer = 0,
+        this.update = function (key) {
+            if (key == null) return;
+            if (key === "correct") this.correctAnswer = this.correctAnswer + 1
+            if (key === "wrong") this.wrongAnswer = this.wrongAnswer + 1
+        }
 
 }
-function useScore() {
 
-    const myobject = new CreateObject({
-        __correctAnswer: 0,
-        __wrongAnswer: 0,
-        __skiped: 0,
-    })
-
-    // myobject.updateValue("correct_answer");
-
-    setObject("scoreObject", myobject);
-    const score = getObject("scoreObject");
-    return (score) ? {score, udate: myobject.updateValue } : setObject("scoreObject", myobject);
-}
+const score = new ScoreBoard();
+// scores.update("correctAnswer")
 
 
 const startBtn = document.querySelector("#btn-start");
@@ -498,6 +472,7 @@ const Template = document.querySelector("[data-TemplateContainer]");
 startBtn.addEventListener("click", () => {
     const content = templateInnerHtml(Template);
     let uniqueNumber = uniqueRandomNumber(20);
+    // console.log(uniqueNumber())
     genrateQuiz(quizBox, content, uniqueNumber);
 })
 
@@ -519,7 +494,12 @@ function genrateQuiz(quizBox, content, uniqueNumber) {
     progressBox.style.setProperty("--progress_value", trackProgress());
 
     let __queIndex = uniqueNumber();
-    generateContent(content, __queIndex.index, QUESTIONS[__queIndex.index]);
+    generateContent(
+        content,
+        __queIndex.index,
+        QUESTIONS[__queIndex.index],
+        false
+    );
     // generateContent(content, uniqueNumber);
 
 
@@ -548,7 +528,7 @@ function NextQueEventHandler(nextQue) {
         if (queCount_ != QUESTIONS.length) startTimer(timeBox);
 
         let __queIndex = uniqueNumber();
-        generateContent(document, __queIndex.index, QUESTIONS[__queIndex.index]);
+        generateContent(document, __queIndex.index, QUESTIONS[__queIndex.index], true);
 
         const progressBox = document.querySelector(".progress");
         progressBox.style.setProperty(
@@ -563,6 +543,9 @@ function NextQueEventHandler(nextQue) {
             let quizBox = document.querySelector("[data-guizBox]");
             let _Template_ = document.querySelector("[data-endScreen]")
             const content = templateInnerHtml(_Template_);
+            console.log(score)
+
+            console.log(content)
 
             quizBox.innerHTML = ""
             quizBox.appendChild(content)
@@ -622,27 +605,41 @@ function templateInnerHtml(Template) {
     return cloneNode;
 }
 
-function uniqueRandomNumber(maxRange) {
-    const ranNums = [];
-    for (let i = 0; i <= maxRange * 6; i++) {
-        let random = Math.floor(Math.random() * maxRange);
-        ranNums.push(random);
+function random(range) {
+    return Math.floor(Math.random() * (range + 1))
+}
+
+function randomInRange(quantity, max) {
+    let array = new Set();
+    while (array.size < quantity) {
+        let newRandom = random(max);
+        const indexofRandom = Array.from(newRandom).indexOf(newRandom)
+        if (indexofRandom === -1) {
+            array.add(newRandom)
+        }
     }
-    const unique = [...new Set(ranNums)];
+    return array;
+}
+let maxRange = 20;
+let unique = Array.from(randomInRange(maxRange, maxRange))
+
+
+
+function uniqueRandomNumber() {
+
     return function selectUnique() {
         let newRandom = Math.floor(Math.random() * unique.length);
-        const index = unique.indexOf(unique[newRandom]);
+        const index = unique.indexOf(unique[newRandom])
         const number = unique[newRandom];
-
         if (index > -1) {
             unique.splice(index, 1);
         }
-        return { index: number, };
+        return { index: number };
     }
 }
 
 
-function generateContent(content, index, question) {
+function generateContent(content, index, question, nextClick) {
     const questionBox = content.querySelector("[data-quizBody] h4");
     questionBox.innerHTML = `Q${++queCount_}: ${question.question}`;
 
@@ -653,31 +650,56 @@ function generateContent(content, index, question) {
         option.textContent = question.answers[answerKey];
         label.dataset.answer = answerKey;
         const radio = label.querySelector("input[type='radio']");
+        let correct = answerKey === question.correct_answer
         // let x = 0
-        radio.addEventListener("click", () => {
-            checkAnswer(
-                { target: label },
-                answerKey,
-                question.correct_answer,
-                index
-            )
+        if (!nextClick) {
+            radio.addEventListener("click", (e) => {
 
-            // console.log(++x)
-        })
+                e.target.checked = false;
+                checkAnswer(
+                    { target: label },
+                    answerKey,
+                    question.correct_answer,
+                    index,
+                    // e
+                )
+
+                if (correct) {
+                    score.update("correct")
+                } else {
+                    score.update("wrong")
+                }
+            })
+        }
+
+
     });
 }
 
 
 
 function checkAnswer({ target, labels }, selectedAnswer, correctAnswer) {
+
+    // console.log(event)
     const correct = selectedAnswer === correctAnswer;
     const Labels = Array.from(
         document.querySelectorAll("[data-quizBody] .options > label")
     ).filter(lbl => lbl.dataset.answer === correctAnswer && lbl !== target);
+
+
+    Labels.forEach(lbl => {
+        let input = lbl.querySelector("input[type=\"radio\"]");
+        if (input.checked == true) {
+            input.checked = false;
+        }
+    })
     if (correct) {
         target.setAttribute("correct", true)
+
+        console.log("correct")
     }
     if (!correct) {
+        //  console.log("wrong")
         target.setAttribute("wrong", true)
         Labels.forEach(lbl => lbl.setAttribute("correct", true));
     }
@@ -705,8 +727,5 @@ function disableOptions(isCorrect, target, isCorrectElement) {
         input[0].checked = false;
     });
 }
-
-
-
 
 
