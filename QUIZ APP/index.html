@@ -25,7 +25,6 @@
                 <p>Are you ready to start? </p>
                 <button id="btn-start"> I'm ready</button>
             </div>
-            
         </div>
     </section>
 
@@ -43,12 +42,12 @@
             <h4>
             </h4>
             <div class="options">
-                <label for="option_a"  data-Option="a" class="answer_a">
+                <label for="option_a" data-Option="a" class="answer_a">
                     <input type="radio" name="options" class="option_a" id="option_1">
                     <span>a</span>
                     <p data-Options="answer_a"></p>
                 </label>
-                <label for="option_b"   data-Option="b" class="answer_b">
+                <label for="option_b" data-Option="b" class="answer_b">
                     <input type="radio" name="options" class="option_b" id="option_2">
                     <span>b</span>
                     <p data-Options="answer_b"></p>
@@ -81,17 +80,28 @@
     <template data-endScreen>
         <div class="endQuiz">
                 <h1> you've completed the Quiz </h1>
-                <h4 class="score"> 
-                   you scored  <span data-scoregained>10</span>
-                     out of
-                    <span data-scoreTotle>20</span>
-                </h4>
+                
+                <div class="flex">
+                    <div class="correct">
+                         <p>correct answer</p>
+                         <h4 class="score" data-correct-answer>
+
+                        </h4>
+                    </div>
+                    <div class="wrong">
+                         <p>wrong answer</p>
+                         <h4 class="score"  data-cwrong-answer>
+
+                        </h4>
+                    </div>
+                </div>
 
                 <div class="buttons-container">
                     <button id="btn-start"> replay quiz</button>
                     <button id="btn-quit"> quit quiz</button>
                 </div>
             </div>
+
     </template>
 </body>
 

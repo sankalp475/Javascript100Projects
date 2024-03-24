@@ -464,28 +464,29 @@ const score = new ScoreBoard();
 
 const startBtn = document.querySelector("#btn-start");
 const quizBox = document.querySelector("[ data-guizBox]");
-let queCount_ = 0;
-let questionCount = 0;
+
+let maxRange = 20;
+let questionCounter = 0;
 const Template = document.querySelector("[data-TemplateContainer]");
 
 
 startBtn.addEventListener("click", () => {
     const content = templateInnerHtml(Template);
-    let uniqueNumber = uniqueRandomNumber(20);
+
     // console.log(uniqueNumber())
-    genrateQuiz(quizBox, content, uniqueNumber);
+    genrateQuiz(quizBox, content, questionCounter);
 })
 
-
-function genrateQuiz(quizBox, content, uniqueNumber) {
+let temp = 0;
+function genrateQuiz(quizBox, content, questionCounter) {
 
     if (
         (quizBox == undefined) ||
         (content == undefined) ||
-        (uniqueNumber == undefined)
+        (questionCounter == undefined)
     ) return;
     const timeBox = content.querySelector(".quizBox-header > button:nth-child(2) span")
-    if (queCount_ != QUESTIONS.length) {
+    if ( questionCounter != QUESTIONS.length) {
         startTimer(timeBox);
     }
 
@@ -493,21 +494,20 @@ function genrateQuiz(quizBox, content, uniqueNumber) {
     const progressBox = content.querySelector(".progress");
     progressBox.style.setProperty("--progress_value", trackProgress());
 
-    let __queIndex = uniqueNumber();
+    let __queIndex = 1;
     generateContent(
         content,
-        __queIndex.index,
-        QUESTIONS[__queIndex.index],
-        false
+        QUESTIONS[questionCounter], 
+        true
     );
-    // generateContent(content, uniqueNumber);
 
 
     const QueRemaning = content.querySelector("[data-question-remaning]");
     const remaning = QueRemaning.querySelector("#remanng__que");
     const totle = QueRemaning.querySelector("#totle__que");
+    
 
-    remaning.innerHTML = questionCount;
+    remaning.innerHTML = temp++;;
     totle.innerHTML = QUESTIONS.length;
 
     const nextQue = content.querySelector("#next__que");
@@ -516,30 +516,31 @@ function genrateQuiz(quizBox, content, uniqueNumber) {
     quizBox.innerHTML = "";
     quizBox.appendChild(content);
 }
-
+// const quextionLength = 20;
 function NextQueEventHandler(nextQue) {
 
     nextQue.addEventListener("click", () => {
 
         const content = templateInnerHtml(Template);
-        let uniqueNumber = uniqueRandomNumber(20);
 
         const timeBox = document.querySelector(".quizBox-header > button:nth-child(2) span")
-        if (queCount_ != QUESTIONS.length) startTimer(timeBox);
+        if ( questionCounter != QUESTIONS.length) startTimer(timeBox);
+        questionCounter++;
+        let __queestion = QUESTIONS[questionCounter]
+        generateContent(document, __queestion, false);
 
-        let __queIndex = uniqueNumber();
-        generateContent(document, __queIndex.index, QUESTIONS[__queIndex.index], true);
+        console.log(questionCounter+1, __queestion)
 
         const progressBox = document.querySelector(".progress");
         progressBox.style.setProperty(
             "--progress_value",
-            trackProgress({ type: "calculateProgress" }, queCount_)
+            trackProgress({ type: "calculateProgress" }, questionCounter)
         );
 
         const remaning = document.querySelector("#remanng__que");
-        remaning.innerHTML = (queCount_ == QUESTIONS.length) ? queCount_ : queCount_ - 1;
+        remaning.innerHTML = questionCounter;
 
-        if (queCount_ == QUESTIONS.length) {
+        if ( questionCounter == QUESTIONS.length) {
             let quizBox = document.querySelector("[data-guizBox]");
             let _Template_ = document.querySelector("[data-endScreen]")
             const content = templateInnerHtml(_Template_);
@@ -572,8 +573,9 @@ function trackProgress({ type = "default" } = {}, IndexValue) {
     if (type == "default") return `0%`;
 
     if (type == "calculateProgress" && IndexValue == undefined) return;
-
+    console.log(`${(IndexValue / QUESTIONS.length) * 100}%`)
     if (type == "calculateProgress") return `${(IndexValue / QUESTIONS.length) * 100}%`;
+    
 }
 
 let timeInterval = null;
@@ -620,29 +622,16 @@ function randomInRange(quantity, max) {
     }
     return array;
 }
-let maxRange = 20;
+
 let unique = Array.from(randomInRange(maxRange, maxRange))
 
 
 
-function uniqueRandomNumber() {
 
-    return function selectUnique() {
-        let newRandom = Math.floor(Math.random() * unique.length);
-        const index = unique.indexOf(unique[newRandom])
-        const number = unique[newRandom];
-        if (index > -1) {
-            unique.splice(index, 1);
-        }
-        return { index: number };
-    }
-}
-
-
-function generateContent(content, index, question, nextClick) {
+function generateContent(content, question, nextClick) {
     const questionBox = content.querySelector("[data-quizBody] h4");
-    questionBox.innerHTML = `Q${++queCount_}: ${question.question}`;
-
+    questionBox.innerHTML = `Q${question.id}: ${question.question}`;
+    // console.log(questionCounter+1, question)
     const labels = content.querySelectorAll("[data-quizBody] .options > label");
     labels.forEach((label, idx) => {
         const option = label.querySelector("p");
@@ -651,8 +640,8 @@ function generateContent(content, index, question, nextClick) {
         label.dataset.answer = answerKey;
         const radio = label.querySelector("input[type='radio']");
         let correct = answerKey === question.correct_answer
-        // let x = 0
-        if (!nextClick) {
+        if (nextClick != false) {
+
             radio.addEventListener("click", (e) => {
 
                 e.target.checked = false;
@@ -660,7 +649,6 @@ function generateContent(content, index, question, nextClick) {
                     { target: label },
                     answerKey,
                     question.correct_answer,
-                    index,
                     // e
                 )
 
@@ -670,7 +658,9 @@ function generateContent(content, index, question, nextClick) {
                     score.update("wrong")
                 }
             })
+
         }
+
 
 
     });

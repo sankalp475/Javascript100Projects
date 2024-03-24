@@ -306,12 +306,10 @@ button[data-timeLeft] span.none {
 .quizBox .endQuiz h4.score {
     font-family: var(--font-roboto);
     font-size: 1.3rem;
-    color: rgb(104, 104, 104);
+    color: rgb(0, 0, 0);
 }
 
-.quizBox .endQuiz h4.score > span[data-scoregained] {
-    color: #000 !important;
-}
+
 
 
 .quizBox .endQuiz h4.score > span[data-scoreTotle] {
@@ -399,6 +397,27 @@ button[data-timeLeft] span.none {
     bottom: 0;
     height: .1rem;
     background-color: rgb(230, 230, 230);
+}
+
+
+div.flex {
+    display: flex;
+    gap: 2rem;
+    margin: 1rem;
+}
+
+div.flex div.correct {
+    background: rgba(248, 2, 2, 0.089);
+    border: 3px solid rgb(255, 0, 0);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+div.flex div.wrong {
+    background: rgba(100, 248, 2, 0.089);
+    border: 3px solid rgb(102, 255, 0);
+    padding: 1rem;
+    border-radius: 1rem;
 }
 
 /* TODO footer */
