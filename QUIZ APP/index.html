@@ -13,7 +13,7 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script type="module" src="script.js" defer></script>
 
 </head>
 
@@ -29,68 +29,71 @@
     </section>
 
 
-    <template data-TemplateContainer>
-        <header class="quizBox-header">
-            <h2>Quiz Application</h2>
+    <template data-Template-quizBox>
+        <div class="quizBox"  data-guizBox>
+            <header class="quizBox-header">
+                <h2>Quiz Application</h2>
 
-            <button data-timeLeft=""> time Left
-                <span class="">00</span>
-            </button>
-        </header>
-        <div class="progress" data-progress="true"></div>
-        <section class="quizBox-body" data-quizBody>
-            <h4>
-            </h4>
-            <div class="options">
-                <label for="option_a" data-Option="a" class="answer_a">
-                    <input type="radio" name="options" class="option_a" id="option_1">
-                    <span>a</span>
-                    <p data-Options="answer_a"></p>
-                </label>
-                <label for="option_b" data-Option="b" class="answer_b">
-                    <input type="radio" name="options" class="option_b" id="option_2">
-                    <span>b</span>
-                    <p data-Options="answer_b"></p>
-                </label>
-                <label for="option_c" data-Option="c" class="answer_c">
-                    <input type="radio" name="options" class="option_b" id="option_3">
-                    <span>c</span>
-                    <p data-Options="answer_c"></p>
-                </label>
-                <label data-Option="d" data-OptionCorrect="true" class="answer_d">
-                    <input type="radio" name="options" class="option_b" id="option_4">
-                    <span>d</span>
-                    <p data-Options="answer_d"></p>
-                </label>
-            </div>
-        </section>
-        <footer class="quizBox-footer">
-            <div data-question-remaning>
+                <button data-timeLeft=""> time Left
+                    <span class="">00</span>
+                </button>
+            </header>
+            <div class="progress" data-progress="true"></div>
+            <section class="quizBox-body" data-quizBody>
                 <h4>
-                    <span id="remanng__que"></span>
-                    of
-                    <span id="totle__que"></span>
-                    question
                 </h4>
-            </div>
-            <button id="next__que">next que</button>
-        </footer>
+                <div class="options">
+                    <label for="option_a" data-Option="a" class="answer_a">
+                        <input type="radio" name="options" class="option_a" id="option_1">
+                        <span>a</span>
+                        <p data-Options="answer_a"></p>
+                    </label>
+                    <label for="option_b" data-Option="b" class="answer_b">
+                        <input type="radio" name="options" class="option_b" id="option_2">
+                        <span>b</span>
+                        <p data-Options="answer_b"></p>
+                    </label>
+                    <label for="option_c" data-Option="c" class="answer_c">
+                        <input type="radio" name="options" class="option_b" id="option_3">
+                        <span>c</span>
+                        <p data-Options="answer_c"></p>
+                    </label>
+                    <label data-Option="d" data-OptionCorrect="true" class="answer_d">
+                        <input type="radio" name="options" class="option_b" id="option_4">
+                        <span>d</span>
+                        <p data-Options="answer_d"></p>
+                    </label>
+                </div>
+            </section>
+            <footer class="quizBox-footer">
+                <div data-question-remaning>
+                    <h4>
+                        <span id="remanng__que"></span>
+                        of
+                        <span id="totle__que"></span>
+                        question
+                    </h4>
+                </div>
+                <button id="next__que">next que</button>
+            </footer>
+        </div>
     </template>
 
     <template data-endScreen>
-        <div class="endQuiz">
+        <div class="quizBox" data-guizBox>
+            <div class="endQuiz">
                 <h1> you've completed the Quiz </h1>
-                
+
                 <div class="flex">
                     <div class="correct">
-                         <p>correct answer</p>
-                         <h4 class="score" data-correct-answer>
+                        <p>correct answer</p>
+                        <h4 class="score" data-correct-answer>
 
                         </h4>
                     </div>
                     <div class="wrong">
-                         <p>wrong answer</p>
-                         <h4 class="score"  data-cwrong-answer>
+                        <p>wrong answer</p>
+                        <h4 class="score" data-cwrong-answer>
 
                         </h4>
                     </div>
@@ -101,7 +104,7 @@
                     <button id="btn-quit"> quit quiz</button>
                 </div>
             </div>
-
+        </div>
     </template>
 </body>
 
