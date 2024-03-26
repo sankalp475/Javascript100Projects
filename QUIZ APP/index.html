@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -14,97 +15,84 @@
 
     <link rel="stylesheet" href="style.css">
     <script type="module" src="script.js" defer></script>
-
 </head>
 
 <body>
-    <section class="quizBox-container">
-        <div class="quizBox" data-guizBox>
-            <div class="startQuiz">
-                <h1> Welcome to Awesome Quiz! App </h1>
-                <p>Are you ready to start? </p>
-                <button id="btn-start"> I'm ready</button>
-            </div>
-        </div>
-    </section>
+    <section class="quizbox-container quuizBox-model">
+        <!-- <div class="quuizBox__model--welcome">
+            <h1> Welcome to Awesome Quiz! App </h1>
+            <p>are u ready to start</p>
+            <button id="btn-start"> I'm ready</button>
+        </div> -->
+        <!-- <section class="quuizBox__model--start">
+            <header class="model--start--header">
+                <h4>quiz app</h4>
 
-
-    <template data-Template-quizBox>
-        <div class="quizBox"  data-guizBox>
-            <header class="quizBox-header">
-                <h2>Quiz Application</h2>
-
-                <button data-timeLeft=""> time Left
-                    <span class="">00</span>
+                <button class="timer">
+                    time left
+                    <span>00</span>
                 </button>
             </header>
-            <div class="progress" data-progress="true"></div>
-            <section class="quizBox-body" data-quizBody>
-                <h4>
-                </h4>
-                <div class="options">
-                    <label for="option_a" data-Option="a" class="answer_a">
-                        <input type="radio" name="options" class="option_a" id="option_1">
-                        <span>a</span>
-                        <p data-Options="answer_a"></p>
-                    </label>
-                    <label for="option_b" data-Option="b" class="answer_b">
-                        <input type="radio" name="options" class="option_b" id="option_2">
-                        <span>b</span>
-                        <p data-Options="answer_b"></p>
-                    </label>
-                    <label for="option_c" data-Option="c" class="answer_c">
-                        <input type="radio" name="options" class="option_b" id="option_3">
-                        <span>c</span>
-                        <p data-Options="answer_c"></p>
-                    </label>
-                    <label data-Option="d" data-OptionCorrect="true" class="answer_d">
-                        <input type="radio" name="options" class="option_b" id="option_4">
-                        <span>d</span>
-                        <p data-Options="answer_d"></p>
-                    </label>
+            <main class="model__start--main">
+                <input type="range" name="range" id="" value="-1" min="0" max="20">
+                <h3>
+                    Q1: Which of the following is true about HTML 5?
+                </h3>
+                <div class="opstions">
+
+                    <button class="opstion">
+                        HTML5 is the next major revision of the HTML standard superseding HTML 4.01, XHTML 1.0, and
+                        XHTML 1.1.
+                    </button>
+                    <button class="opstion">
+                        HTML5 is a cooperation between the World Wide Web Consortium (W3C) and the Web Hypertext
+                        Application Technology Working Group (WHATWG).
+                    </button>
+                    <button class="opstion ">
+                        HTML5 is a standard for structuring and presenting content on the World Wide Web
+                    </button>
+                    <button class="opstion">All of These</button>
                 </div>
-            </section>
-            <footer class="quizBox-footer">
-                <div data-question-remaning>
+            </main>
+            <footer class="model__start--footer">
+                <div class="devider"></div>
+                <div class="footer-box">
                     <h4>
-                        <span id="remanng__que"></span>
-                        of
-                        <span id="totle__que"></span>
-                        question
+                        <span>0</span>
+                        <span>out of</span>
+                        <span>20</span>
+                        <span>question</span>
+                    </h4>
+                    <button data-next-btn-event>next</button>
+                </div>
+            </footer>
+        </section> -->
+
+    </section>
+
+    <template>
+    <template data-endScreen-template>
+        <section class="quuizBox__model--end" data-endScreen-container>
+            <h1> you've completed the Quiz </h1>
+            <div class="flex">
+                <div class="correct">
+                    <p>correct answer</p>
+                    <h4 class="score" data-correct-answer="">
+                        0
                     </h4>
                 </div>
-                <button id="next__que">next que</button>
-            </footer>
-        </div>
-    </template>
-
-    <template data-endScreen>
-        <div class="quizBox" data-guizBox>
-            <div class="endQuiz">
-                <h1> you've completed the Quiz </h1>
-
-                <div class="flex">
-                    <div class="correct">
-                        <p>correct answer</p>
-                        <h4 class="score" data-correct-answer>
-
-                        </h4>
-                    </div>
-                    <div class="wrong">
-                        <p>wrong answer</p>
-                        <h4 class="score" data-cwrong-answer>
-
-                        </h4>
-                    </div>
-                </div>
-
-                <div class="buttons-container">
-                    <button id="btn-start"> replay quiz</button>
-                    <button id="btn-quit"> quit quiz</button>
+                <div class="wrong">
+                    <p>wrong answer</p>
+                    <h4 class="score" data-cwrong-answer="">
+                        5
+                    </h4>
                 </div>
             </div>
-        </div>
+            <div class="buttons-container">
+                <button id="btn-start"> replay quiz</button>
+                <button id="btn-quit"> quit quiz</button>
+            </div>
+        </section>
     </template>
 </body>
 

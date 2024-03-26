@@ -1,6 +1,7 @@
 :root {
     --bg-q: #007bff;
 
+    --trackbackground: hwb(0 95% 5%);
 
     --font-roboto: "Roboto", sans-serif;
     --fw-100: 100;
@@ -24,232 +25,244 @@ body {
     background: var(--bg-q);
 }
 
-.quizBox-container {
+.quizbox-container {
+    display: grid;
     width: 100%;
     height: 100vh;
-    display: grid;
     place-items: center center;
+    padding: 1em;
 }
 
-.quizBox-container .quizBox {
+
+.quuizBox__model--welcome,
+.quuizBox__model--start,
+.quuizBox__model--end {
     width: 70%;
-    background-color: #fff;
-    /* padding: .5rem; */
-    border-radius: .8rem;
-    display: grid;
-}
-
-/* TODO header */
-.quizBox .quizBox-header {
+    background: #fff;
+    padding: .5rem 1rem;
+    max-width: 500px;
+    border-radius: 1rem;
+    text-align: center;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: .6rem 1rem;
-}
-
-.quizBox .quizBox-header h2 {
-    font-family: var(--font-roboto);
-    font-size: 1.3rem;
-
-}
-
-.quizBox .quizBox-header button[data-timeLeft] {
-    --bg-btn: rgba(0, 174, 255, 0.411);
-    font-family: var(--font-roboto);
-    padding: .2rem;
-    background-color: var(--bg-btn);
-    border: 1px solid var(--bg-btn);
-    border-radius: .3rem;
-    color: #0d0d0e;
-    font-size: .90rem;
-    text-transform: capitalize;
-    display: flex;
-    gap: .3rem;
-    /* justify-content: center; */
-    align-items: center;
-
-    font-weight: var(--fw-500);
-    transition: .3s linear ease;
-}
-
-.quizBox .quizBox-header button[data-timeLeft]:hover {
-    --bg-btn: rgba(1, 131, 192, 0.411);
-}
-
-button[data-timeLeft] span.none {
-    display: none !important;
-}
-
-.quizBox .quizBox-header button[data-timeLeft] span {
-    padding: .3rem .5rem;
-    background: #000;
-    color: #fff;
-    border-radius: .2rem;
-}
-
-.progress {
-    width: 100%;
-    background-color: rgb(240, 240, 240);
-    height: 4px;
-    width: 100%;
+    flex-direction: column;
+    gap: 1rem;
     position: relative;
 }
 
-.progress::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: calc(100% - var(--progress_value));
-    border-radius: 0 100px 100px 0;
-    background-color: var(--bg-q);
-}
-
-/* TODO header */
-/* TODO main section or que container */
-
-.quizBox-body {
-    padding: .5rem 1rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.quizBox-body h4 {
+.quuizBox__model--welcome h1 {
     font-family: var(--font-roboto);
-    font-size: 1.1rem;
-    padding-block: 1rem;
 }
 
-.quizBox-body div.options {
+.quuizBox__model--welcome p {
+    font-family: var(--font-roboto);
+    font-size: 1.2rem;
+}
+
+.quuizBox__model--welcome button {
+    font-family: var(--font-roboto);
+    font-size: 1.2rem;
+    align-self: center;
+    padding: .6rem .8rem;
+    background: var(--bg-q);
+    border: 2px solid var(--bg-q);
+    border-radius: .5rem;
+    color: #fff;
+    text-transform: capitalize;
+}
+
+.quuizBox__model--start {
     display: flex;
     flex-direction: column;
-    padding-block: .5rem;
+    gap: 0rem;
 }
 
-.quizBox-body div.options label[data-Option] input[type="radio"] {
-    appearance: none;
+.quuizBox__model--start header {
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-roboto);
+    text-transform: capitalize;
+    width: 100%;
+    padding: .4rem;
+}
+
+.quuizBox__model--start header h4 {
+    font-size: 1.4rem;
+}
+
+.quuizBox__model--start header button.timer {
+    padding: .2rem .3rem;
+    text-transform: capitalize;
+    font-size: 1rem;
+    font-family: var(--font-roboto);
+    font-weight: var(--fw-500);
+    background-color: #0c78ec5b;
+    border: 2px solid #007bff;
+    display: flex;
+    border-radius: .2rem;
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+}
+
+.quuizBox__model--start header button.timer span {
+    background-color: black;
+    color: #fff;
+    border-radius: .2rem;
+    padding: .2rem .5rem;
+    display: flex;
+    text-align: center;
+}
+
+.quuizBox__model--start main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+}
+
+.quuizBox__model--start main h3 {
+    font-family: var(--font-roboto);
+    text-align: left;
+    margin-top: 10px;
+}
+
+.quuizBox__model--start main input[type="range"] {
+    width: 100%;
+    height: 5px;
     position: absolute;
     left: 0;
     right: 0;
-    top: 0;
-    bottom: 0;
-    transition: .4s linear ease;
+    appearance: none;
+    overflow: hidden;
+    pointer-events: none;
+}
+input[value="-1"]::-webkit-slider-thumb,
+input[value="-1"]::-moz-range-thumb{
+   display: none !important;
+   color: transparent;
+   background: transparent;
+   height: 0px !important;
+   width: 0px !important;
+   box-shadow: none;
+}
+/* value="-1" */
 
-    /* padding: 4px !important; */
+/* Track: webkit browsers */
+input[type="range"]::-webkit-slider-runnable-track,
+input[type="range"]::-moz-range-track {
+    height: 5px;
+    background: var(--trackbackground);
+    border-radius: 16px;
 }
 
-.quizBox-body div.options label[data-Option] {
+/* Thumb: webkit */
+input[type="range"]::-webkit-slider-thumb,
+input[type="range"]::-moz-range-thumb {
+    color: #007bff;
+    border: none;
+    height: 5px;
+    background: currentColor;
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+    box-shadow: -407px 0 0 400px #007bff;
+}
+
+
+main .opstions {
     display: flex;
-    margin-block: .5rem;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+main div.opstions>button.opstion {
+    padding-block: .5rem;
+    border: 2px solid #007bff;
+    border-radius: .3rem;
+    background: #0166ff25;
+    /* color: #fff; */
+    text-align: left;
+    padding-left: 20px;
+    transition: .2s linear;
+    font-weight: 500;
+    font-family: var(--font-roboto);
+}
+
+main div.opstions>button.opstion.correct {
+    border-color: rgb(43, 150, 10);
+    background: #74ff023a;
+    color: #000000;
+}
+main div.opstions>button.opstion.correct:hover {
+    pointer-events: none;
+}
+
+
+main div.opstions>button.opstion.wrong,
+main div.opstions>button.opstion.wrong:hover {
+    border-color: rgb(248, 10, 10);
+    background: #ff000036;
+    color: #000000;
+}
+
+main div.opstions>button.opstion[data-poinerEvents="disabled"] {
+    filter: grayscale(1);
+    pointer-events: none;
+}
+
+main div.opstions>button.opstion:hover {
+    background: #007bff;
+    color: #fff;
+}
+
+div.model__start--footer {
+    display: flex;
+    flex-direction: column;
+}
+
+.devider {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #d1d1d1;
+    margin-top: .5rem;
+}
+
+.footer-box {
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem 0rem .5rem;
     align-items: center;
-    padding: .5rem 1rem;
-    border: 2px solid rgb(199, 199, 199);
-    border-radius: .5rem;
+    margin-top: .6rem;
+}
+
+.footer-box h4 {
     font-family: var(--font-roboto);
     font-size: .9rem;
-    text-wrap: wrap;
-    word-wrap: break-word;
-    background-color: #f3f2f2;
-    border-color: var(--bg-q);
-    background-color: rgba(7, 156, 255, 0.11);
-    text-align: left;
-    gap: 1rem;
-    transition: .4s linear ease;
-    position: relative;
+}
+.footer-box h4 span:nth-child(2n+0) {
+    color: rgb(58, 58, 58);
 }
 
-.quizBox-body div.options label[data-Option]:has(input[type="radio"]:checked) {
-    --bg-qa: #007bff;
-    background-color: var(--bg-qa);
-    color: #fff;
+button[data-next-btn-event] {
+    border: 2px solid #007bff;
+    padding: .5rem .9rem;
+    background: #007bff;
+    color:#fff;
+    border-radius: .5rem;
 }
 
-
-/* .quizBox-body div.options label[data-OptionCorrect="true"] {
-   background-color: hsl(171, 100%, 41%);
-   border-color: hsl(171, 100%, 41%);
-}
-.quizBox-body div.options label[data-OptionIncorrect="true"]:has(input[type="radio"]:checked) {
-   background-color: hsl(348, 100%, 61%);
-   border-color: hsl(348, 100%, 61%);
-   color: #fff;
-} */
-
-
-
-.quizBox-body div.options label[data-Option]:has(input[type="radio"]:checked) span {
-    background: #fff;
-    color: #000 !important;
-    border: 2px solid #fff;
-}
-
-.quizBox-body div.options label[data-Option] span {
-    --bg-qa: #007bff;
-    font-weight: var(--fw-900);
-    border: 2px solid var(--bg-qa);
-    background-color: var(--bg-qa);
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 .3rem;
-    color: #fff !important;
-}
-
-.quizBox-body div.options label[data-Option]:hover {
-    --bg-qa: #007bff;
-    background: var(--bg-qa);
-    color: #fff;
-}
-
-.quizBox-body div.options label[disabled] {
-    pointer-events: none;
-    filter: grayscale(1);
-    /* cursor:; */
-}
-
-/* .quizBox-body h4[disabled="true"] {
-     pointer-events: none;
-    filter: grayscale(1);
-} */
-
-
-
-.quizBox-body div.options label[wrong] {
-    background-color: hsl(348, 100%, 61%);
-    border-color: hsl(0, 85.1%, 34.3%);
-
-    pointer-events: none;
-}
-
-.quizBox-body div.options label[wrong] span {
-    background: #fff !important;
-    color: #000 !important;
-    border-color: #fff !important;
-}
-
-.quizBox-body div.options label[correct] {
-    background-color: hsl(106.9, 94.4%, 42%);
-    border-color: hsl(107, 82.7%, 33.9%);
-    color: #000;
-    pointer-events: none;
-}
-
-.quizBox-body div.options label[correct] span {
-    background: #fff !important;
-    color: #000 !important;
-    border-color: #fff !important;
+button[data-next-btn-event]:hover {
+    background-color: #0365ce;
+    border-color: #0365ce;
 }
 
 
-
-.quizBox-body div.options label[data-Option]:hover span {
-    --bg-qa: #ffffff;
-    color: #000 !important;
-}
-
-.quizBox .startQuiz {
+.quuizBox__model--end {
     font-family: var(--font-roboto);
     font-size: 1.3rem;
     display: flex;
@@ -261,49 +274,7 @@ button[data-timeLeft] span.none {
     gap: 1rem;
 }
 
-.quizBox .startQuiz p {
-    font-size: 1rem;
-    color: rgb(63, 63, 63);
-}
-
-.quizBox .startQuiz button {
-    --bg-btn: rgb(0, 89, 255);
-    font-family: var(--font-roboto);
-    padding: .5rem 1rem;
-    background-color: var(--bg-btn);
-    border: 1px solid var(--bg-btn);
-    border-radius: .3rem;
-    color: #ffffff;
-    font-size: .90rem;
-    text-transform: capitalize;
-    display: flex;
-    gap: .3rem;
-    /* justify-content: center; */
-    align-items: center;
-    font-weight: var(--fw-500);
-    transition: .3s linear ease;
-    position: relative;
-}
-
-.quizBox .startQuiz button:hover {
-    --bg-btn: rgb(8, 65, 170);
-    background: var(--bg-btn);
-}
-
-
-.quizBox .endQuiz {
-    font-family: var(--font-roboto);
-    font-size: 1.3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 1rem;
-    gap: 1rem;
-}
-
-.quizBox .endQuiz h4.score {
+.quuizBox__model--end h4.score {
     font-family: var(--font-roboto);
     font-size: 1.3rem;
     color: rgb(0, 0, 0);
@@ -312,17 +283,17 @@ button[data-timeLeft] span.none {
 
 
 
-.quizBox .endQuiz h4.score > span[data-scoreTotle] {
+.quuizBox__model--end h4.score > span[data-scoreTotle] {
     color: #000 !important;
 }
 
-.quizBox .endQuiz div.buttons-container  {
+.quuizBox__model--end div.buttons-container  {
     display: flex;
     gap: 2rem;
 }
 
-.quizBox .endQuiz div.buttons-container #btn-start ,
-.quizBox .endQuiz div.buttons-container #btn-quit {
+.quuizBox__model--end div.buttons-container #btn-start ,
+.quuizBox__model--end div.buttons-container #btn-quit {
     --bg-btn: rgb(0, 89, 255);
     font-family: var(--font-roboto);
     padding: .5rem 1rem;
@@ -340,63 +311,9 @@ button[data-timeLeft] span.none {
     transition: 0.3s ease-in-out;
 }
 
-.quizBox .endQuiz div.buttons-container #btn-start:hover, 
-.quizBox .endQuiz div.buttons-container #btn-quit:hover {
+.quuizBox__model--end div.buttons-container #btn-start:hover, 
+.quuizBox__model--end div.buttons-container #btn-quit:hover {
     --bg-btn: rgb(6, 62, 165);
-}
-
-/* TODO main section or que container */
-/* TODO footer */
-.quizBox-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: .6rem 1rem;
-    position: relative;
-}
-
-.quizBox-footer [data-question-remaning] h4 {
-    font-family: var(--font-roboto);
-    font-size: .90rem;
-    font-weight: var(--fw-200);
-
-}
-
-.quizBox-footer [data-question-remaning] h4 span {
-    font-weight: var(--fw-900);
-}
-
-.quizBox-footer button#next__que {
-    --bg-btn: rgb(0, 89, 255);
-    font-family: var(--font-roboto);
-    padding: .5rem 1rem;
-    background-color: var(--bg-btn);
-    border: 1px solid var(--bg-btn);
-    border-radius: .3rem;
-    color: #ffffff;
-    font-size: .90rem;
-    text-transform: capitalize;
-    display: flex;
-    gap: .3rem;
-    /* justify-content: center; */
-    align-items: center;
-    font-weight: var(--fw-500);
-    transition: .3s linear ease;
-}
-
-.quizBox-footer button#next__que:hover {
-    --bg-btn: rgb(3, 60, 165);
-}
-
-.quizBox-footer::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: .1rem;
-    background-color: rgb(230, 230, 230);
 }
 
 
@@ -419,5 +336,3 @@ div.flex div.wrong {
     padding: 1rem;
     border-radius: 1rem;
 }
-
-/* TODO footer */

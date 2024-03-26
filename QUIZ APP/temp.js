@@ -57,8 +57,6 @@ function genrateQuiz(quizBox, content, questionCounter) {
         );
     }
 
-
-
     const QueRemaning = content.querySelector("[data-question-remaning]");
     const remaning = QueRemaning.querySelector("#remanng__que");
     const totle = QueRemaning.querySelector("#totle__que");
@@ -83,7 +81,7 @@ function NextQueEventHandler(nextQue) {
         const timeBox = document.querySelector(".quizBox-header > button:nth-child(2) span")
         if (questionCounter <= QUESTIONS.length - 1) startTimer(timeBox);
         questionCounter++;
-        let __queestion = QUESTIONS[questionCounter]
+        let __queestion = QUESTIONS[questionCounter];
 
         if (questionCounter < QUESTIONS.length) {
             generateContent(document, __queestion, false);
@@ -139,8 +137,7 @@ function trackProgress({ type = "default" } = {}, IndexValue) {
 
 let timeInterval = null;
 function startTimer(timerContainer, isTimerNull) {
-
-
+    
     if (!timerContainer) return;
     if (timeInterval) clearInterval(timeInterval);
     let totleTime = 20;
@@ -183,9 +180,6 @@ function randomInRange(quantity, max) {
 }
 
 let unique = Array.from(randomInRange(maxRange, maxRange))
-
-
-
 
 function generateContent(content, question, nextClick) {
     const questionBox = content.querySelector("[data-quizBody] h4");
@@ -260,7 +254,7 @@ function disableOptions(isCorrect, target, isCorrectElement) {
             target.setAttribute("wrong", true);
             if (
                 label.classList[0] == isCorrectElement.classList[0]
-            ) {
+            ) {startTimer(timeBox);
                 label.removeAttribute("disabled")
                 isCorrectElement.setAttribute("correct", true)
             }
@@ -272,3 +266,4 @@ function disableOptions(isCorrect, target, isCorrectElement) {
 }
 
 
+startTimer(timeBox);
