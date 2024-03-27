@@ -19,12 +19,15 @@
 
 <body>
     <section class="quizbox-container quuizBox-model">
-        <!-- <div class="quuizBox__model--welcome">
+        <div class="quuizBox__model--welcome">
             <h1> Welcome to Awesome Quiz! App </h1>
             <p>are u ready to start</p>
             <button id="btn-start"> I'm ready</button>
-        </div> -->
-        <!-- <section class="quuizBox__model--start">
+        </div>
+    </section>
+
+    <template data-startScreen-template>
+        <section class="quuizBox__model--start">
             <header class="model--start--header">
                 <h4>quiz app</h4>
 
@@ -35,7 +38,7 @@
             </header>
             <main class="model__start--main">
                 <input type="range" name="range" id="" value="-1" min="0" max="20">
-                <h3>
+                <h3 data-questionbox>
                     Q1: Which of the following is true about HTML 5?
                 </h3>
                 <div class="opstions">
@@ -66,11 +69,8 @@
                     <button data-next-btn-event>next</button>
                 </div>
             </footer>
-        </section> -->
-
-    </section>
-
-    <template>
+        </section>
+    </template>
     <template data-endScreen-template>
         <section class="quuizBox__model--end" data-endScreen-container>
             <h1> you've completed the Quiz </h1>

@@ -49,6 +49,9 @@ body {
     position: relative;
 }
 
+.quuizBox__model--welcome {
+    padding: 1rem;
+}
 .quuizBox__model--welcome h1 {
     font-family: var(--font-roboto);
 }
@@ -68,6 +71,11 @@ body {
     border-radius: .5rem;
     color: #fff;
     text-transform: capitalize;
+}
+
+.quuizBox__model--welcome button:hover {
+    background: #015cbd;
+    border-color: #015cbd;
 }
 
 .quuizBox__model--start {
@@ -131,13 +139,14 @@ body {
 
 .quuizBox__model--start main input[type="range"] {
     width: 100%;
-    height: 5px;
+    height: 3px;
     position: absolute;
     left: 0;
     right: 0;
     appearance: none;
     overflow: hidden;
     pointer-events: none;
+    transition: box-shadow 1s linear ease-in-out;
 }
 input[value="-1"]::-webkit-slider-thumb,
 input[value="-1"]::-moz-range-thumb{
@@ -147,6 +156,7 @@ input[value="-1"]::-moz-range-thumb{
    height: 0px !important;
    width: 0px !important;
    box-shadow: none;
+   transition: box-shadow 1s linear ease-in-out;
 }
 /* value="-1" */
 
@@ -156,6 +166,7 @@ input[type="range"]::-moz-range-track {
     height: 5px;
     background: var(--trackbackground);
     border-radius: 16px;
+    transition: box-shadow 1s linear ease-in-out;
 }
 
 /* Thumb: webkit */
@@ -169,6 +180,7 @@ input[type="range"]::-moz-range-thumb {
     appearance: none;
     display: none;
     box-shadow: -407px 0 0 400px #007bff;
+    transition: box-shadow 1s linear ease-in-out;
 }
 
 
