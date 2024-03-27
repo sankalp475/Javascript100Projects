@@ -182,6 +182,8 @@ function randomInRange(quantity, max) {
 let unique = Array.from(randomInRange(maxRange, maxRange))
 
 function generateContent(content, question, nextClick) {
+
+    
     const questionBox = content.querySelector("[data-quizBody] h4");
     let q = questionCounter;
     questionBox.innerHTML = `Q${++q}: ${question.question}`;

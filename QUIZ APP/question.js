@@ -2,7 +2,7 @@ const question = [
     {
         "id": 1,
         "question": "Which tag is used to create a checkbox in HTML?",
-        "description": null,
+          
         "answers": {
             "answer_a": "&lt;checkbox&gt;",
             "answer_b": "&lt; Input type = \"checkbox\"&gt;",
@@ -16,21 +16,13 @@ const question = [
             "answer_c_correct": "false",
             "answer_d_correct": "false",
         },
-        "correct_answer": "answer_a",
-        "explanation": null,
-        "tip": null,
-        "tags": [
-            {
-                "name": "HTML"
-            }
-        ],
-        "category": "Code",
-        "difficulty": "Medium"
+        "correct_answer": "answer_b",
+         
     },
     {
         "id": 2,
         "question": "Which is not a domain name extension",
-        "description": null,
+          
         "answers": {
             "answer_a": ".mil",
             "answer_b": ".com",
@@ -45,20 +37,11 @@ const question = [
             "answer_d_correct": "false",
         },
         "correct_answer": "answer_a",
-        "explanation": null,
-        "tip": null,
-        "tags": [
-            {
-                "name": "HTML"
-            }
-        ],
-        "category": "Code",
-        "difficulty": "Medium"
     },
     {
         "id": 3,
         "question": "Which are the objects used for storing data on the client provided by the HTML local storage?",
-        "description": null,
+          
         "answers": {
             "answer_a": "Window.localStorage",
             "answer_b": "Window.storage",
@@ -98,7 +81,7 @@ const question = [
             "answer_c_correct": "false",
             "answer_d_correct": "true",
         },
-        "correct_answer": "answer_a",
+        "correct_answer": "answer_d",
         "tags": [
             {
                 "name": "HTML"
@@ -123,7 +106,7 @@ const question = [
             "answer_c_correct": "false",
             "answer_d_correct": "false",
         },
-        "correct_answer": "answer_a",
+        "correct_answer": "answer_b",
         "tags": [
             {
                 "name": "HTML"
@@ -135,7 +118,7 @@ const question = [
     {
         "id": 6,
         "question": "Why do we need HTML5 Server-Sent Events?",
-        "description": null,
+          
         "answers": {
             "answer_a": "Server-Sent Events (SSE) is a recent HTML5 specification in combination with the EventSource API designed for streaming updates.",
             "answer_b": "Server-Sent Events (SSE) is a recent HTML5 specification in combination with the EventSource API designed for getting POST and GET request.",
@@ -161,7 +144,7 @@ const question = [
     {
         "id": 7,
         "question": "Tags and test that are not directly displayed on the page are written in _____ section.",
-        "description": null,
+          
         "answers": {
             "answer_a": "&lt;html&gt;",
             "answer_b": "&lt;body&gt;",
@@ -175,7 +158,7 @@ const question = [
             "answer_c_correct": "false",
             "answer_d_correct": "true",
         },
-        "correct_answer": "answer_a",
+        "correct_answer": "answer_d",
         "tags": [
             {
                 "name": "HTML"
@@ -240,7 +223,7 @@ const question = [
             "answer_c_correct": "false",
             "answer_d_correct": "false",
         },
-        "correct_answer": "answer_a",
+        "correct_answer": "answer_b",
         "category": "Code",
         "difficulty": "Medium"
     },
@@ -260,7 +243,7 @@ const question = [
             "answer_c_correct": "true",
             "answer_d_correct": "false",
         },
-        "correct_answer": "answer_a",
+        "correct_answer": "answer_c",
         "category": "Code",
         "difficulty": "Medium"
     },
@@ -280,7 +263,7 @@ const question = [
             "answer_c_correct": "true",
             "answer_d_correct": "false",
         },
-        "correct_answer": "answer_a",
+        "correct_answer": "answer_c",
         "category": "Code",
         "difficulty": "Medium"
     },
@@ -320,7 +303,7 @@ const question = [
             "answer_c_correct": "true",
             "answer_d_correct": "false",
         },
-        "correct_answer": "answer_a",
+        "correct_answer": "answer_c",
         "category": "Code",
         "difficulty": "Medium"
     },
@@ -340,7 +323,7 @@ const question = [
             "answer_c_correct": "false",
             "answer_d_correct": "false",
         },
-        "correct_answer": "answer_a",
+        "correct_answer": "answer_b",
         "category": "Code",
         "difficulty": "Easy"
     },
@@ -360,7 +343,7 @@ const question = [
             "answer_c_correct": "true",
             "answer_d_correct": "false",
         },
-        "correct_answer": "answer_a",
+        "correct_answer": "answer_c",
         "category": "Code",
         "difficulty": "Medium"
     },
@@ -380,7 +363,7 @@ const question = [
             "answer_c_correct": "false",
             "answer_d_correct": "false",
         },
-        "correct_answer": "answer_a",
+        "correct_answer": "answer_b",
         "category": "Code",
         "difficulty": "Easy"
     },
@@ -420,7 +403,7 @@ const question = [
             "answer_c_correct": "false",
             "answer_d_correct": "false",
         },
-        "correct_answer": "answer_a",
+        "correct_answer": "answer_b",
         "category": "Code",
         "difficulty": "Easy"
     },
@@ -440,7 +423,7 @@ const question = [
             "answer_c_correct": "false",
             "answer_d_correct": "true",
         },
-        "correct_answer": "answer_a",
+        "correct_answer": "answer_d",
         "category": "Code",
         "difficulty": "Easy"
     }

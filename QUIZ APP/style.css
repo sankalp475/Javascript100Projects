@@ -37,7 +37,7 @@ body {
 .quuizBox__model--welcome,
 .quuizBox__model--start,
 .quuizBox__model--end {
-    width: 70%;
+    /* width: 90%; */
     background: #fff;
     padding: .5rem 1rem;
     max-width: 500px;
@@ -52,6 +52,7 @@ body {
 .quuizBox__model--welcome {
     padding: 1rem;
 }
+
 .quuizBox__model--welcome h1 {
     font-family: var(--font-roboto);
 }
@@ -146,18 +147,22 @@ body {
     appearance: none;
     overflow: hidden;
     pointer-events: none;
-    transition: box-shadow 1s linear ease-in-out;
+    /* transition: box-shadow 1s linear ease-in-out; */
+    transition: 0.5s ease-in-out !important;
 }
+
 input[value="-1"]::-webkit-slider-thumb,
-input[value="-1"]::-moz-range-thumb{
-   display: none !important;
-   color: transparent;
-   background: transparent;
-   height: 0px !important;
-   width: 0px !important;
-   box-shadow: none;
-   transition: box-shadow 1s linear ease-in-out;
+input[value="-1"]::-moz-range-thumb {
+    display: none !important;
+    color: transparent;
+    background: transparent;
+    height: 0px !important;
+    width: 0px !important;
+    box-shadow: none;
+
+    transition: 0.5s ease-in-out !important;
 }
+
 /* value="-1" */
 
 /* Track: webkit browsers */
@@ -166,7 +171,7 @@ input[type="range"]::-moz-range-track {
     height: 5px;
     background: var(--trackbackground);
     border-radius: 16px;
-    transition: box-shadow 1s linear ease-in-out;
+    /* transition: attr(value) 0.5s ease-in-out !important; */
 }
 
 /* Thumb: webkit */
@@ -180,7 +185,8 @@ input[type="range"]::-moz-range-thumb {
     appearance: none;
     display: none;
     box-shadow: -407px 0 0 400px #007bff;
-    transition: box-shadow 1s linear ease-in-out;
+    
+    /* transition: attr(value) 0.5s ease-in-out !important; */
 }
 
 
@@ -208,6 +214,7 @@ main div.opstions>button.opstion.correct {
     background: #74ff023a;
     color: #000000;
 }
+
 main div.opstions>button.opstion.correct:hover {
     pointer-events: none;
 }
@@ -256,6 +263,7 @@ div.model__start--footer {
     font-family: var(--font-roboto);
     font-size: .9rem;
 }
+
 .footer-box h4 span:nth-child(2n+0) {
     color: rgb(58, 58, 58);
 }
@@ -264,7 +272,7 @@ button[data-next-btn-event] {
     border: 2px solid #007bff;
     padding: .5rem .9rem;
     background: #007bff;
-    color:#fff;
+    color: #fff;
     border-radius: .5rem;
 }
 
@@ -295,16 +303,16 @@ button[data-next-btn-event]:hover {
 
 
 
-.quuizBox__model--end h4.score > span[data-scoreTotle] {
+.quuizBox__model--end h4.score>span[data-scoreTotle] {
     color: #000 !important;
 }
 
-.quuizBox__model--end div.buttons-container  {
+.quuizBox__model--end div.buttons-container {
     display: flex;
     gap: 2rem;
 }
 
-.quuizBox__model--end div.buttons-container #btn-start ,
+.quuizBox__model--end div.buttons-container #btn-start,
 .quuizBox__model--end div.buttons-container #btn-quit {
     --bg-btn: rgb(0, 89, 255);
     font-family: var(--font-roboto);
@@ -323,7 +331,7 @@ button[data-next-btn-event]:hover {
     transition: 0.3s ease-in-out;
 }
 
-.quuizBox__model--end div.buttons-container #btn-start:hover, 
+.quuizBox__model--end div.buttons-container #btn-start:hover,
 .quuizBox__model--end div.buttons-container #btn-quit:hover {
     --bg-btn: rgb(6, 62, 165);
 }
