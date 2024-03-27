@@ -38,6 +38,7 @@ body {
 .quuizBox__model--start,
 .quuizBox__model--end {
     /* width: 90%; */
+    min-width: 60%;
     background: #fff;
     padding: .5rem 1rem;
     max-width: 500px;

@@ -76,28 +76,24 @@ function quizContent(content, { _question_, index }) {
     const questionBox = content.querySelector("[data-questionbox]");
     questionBox.innerHTML = `Q${index + 1}: ${_question_.question}`;
 
-    const opstions = content.querySelectorAll(".opstions button");
-    opstions.forEach((option, index) => {
-        let values = Object.values(_question_.answers).sort((n) => Math.random() - 0.5);
-        let keys = Object.keys(_question_.answers).sort((n) => Math.random() - 0.5);
-        //  console.log(q)
-        // const option = label.querySelector("p")
-        ;
-        const answerKey = `answer_${String.fromCharCode(97 + index)}`;
-        console.log(answerKey)
+    const options = content.querySelectorAll(".opstions button");
 
-        // if(_question_.answers[answerKey] == q[index] ) {
-        //     option.innerHTML = _question_.answers[answerKey];
-        //     option.dataset.answer = answerKey;
-        // }
-        // console.log( index,_question_.answers[answerKey],index, q[index] )
-        // console.log(_question_.answers)
-
-        // console.log(index,Object.keys(_question_.answers))
+    const shuffledKeys = Object.keys(_question_.answers).sort(
+        () => Math.random() - 0.5
+    );
+    // const answerKey = `answer_${String.fromCharCode(97 + index)}`;
+    shuffledKeys.forEach((key, index) => {
+        options[index].innerHTML = _question_.answers[key];
+        // console.log(index, _question_.answers[key], index, key)
+        options[index].setAttribute("data-answer", key);
     });
+
+
+    // const content = getTemplateFromNode(templateNode, startscreen);
+    optionEventListner(content);
+    // let t = content.querySelector(".quuizBox__model--start button.timer span");
+
 }
-
-
 
 
 const QuestionObject = (function () {
@@ -127,7 +123,7 @@ function timerIntervalHandler(timerObject) {
 
 
     const { currentIndex, updateIndex } = QuestionObject;
-    // timerObject = this;
+
     if (timerObject == null) return;
 
     if (timerObject.startTime <= 0) {
@@ -141,7 +137,6 @@ function timerIntervalHandler(timerObject) {
             const content = getTemplateFromNode(templateNode, startscreen);
             genrateQuiz(content);
 
-
         }
 
         if (currentIndex == question.length - 1) {
@@ -152,11 +147,6 @@ function timerIntervalHandler(timerObject) {
 
     }
 
-
-
-
-
-    // console.log( Math.random() - .5);
 
     (timerObject.startTime > timerObject.endTime)
         ? timerObject.startTime--
@@ -173,6 +163,23 @@ function getTemplateFromNode(templateNode, dataset) {
     const templateNodeElement = Object.values(templateNode).filter(node => Object.keys(node.dataset)[0] == dataset)[0];
 
     return templateNodeElement.content.cloneNode(true)
+}
+
+function optionEventListner(content) {
+    const options = content.querySelectorAll(".opstions button");
+    // console.log(options);
+    options.forEach((option) => {
+        // console.log(option)
+        option.addEventListener("click", (event) => {
+            // TODO check answer and put wrong and correct class for it accordingly
+            // Timer.timeInterval = null;
+            // console.log()
+            clearInterval(Timer.timeInterval)
+            
+        })
+    });
+
+
 }
 
 

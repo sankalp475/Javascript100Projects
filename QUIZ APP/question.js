@@ -172,7 +172,7 @@ const question = [
         "question": "&lt;TD&gt; … &lt;/TD&gt; tag is used for ________",
         "answers": {
             "answer_a": "Table heading",
-            "answer_b": "none of the above",
+            "answer_b": "  None Of The these",
             "answer_c": "Table row",
             "answer_d": "Table Records",
         },
@@ -234,7 +234,7 @@ const question = [
             "answer_a": "Dir",
             "answer_b": "Title",
             "answer_c": "Tooltip",
-            "answer_d": "None of the above",
+            "answer_d": "  None Of The these",
         },
         "multiple_correct_answers": "false",
         "correct_answers": {
@@ -254,7 +254,7 @@ const question = [
             "answer_a": "BODY",
             "answer_b": "HEAD",
             "answer_c": "BASE",
-            "answer_d": "None Of The Above",
+            "answer_d": "  None Of The these",
         },
         "multiple_correct_answers": "false",
         "correct_answers": {
