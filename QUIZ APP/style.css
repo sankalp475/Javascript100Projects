@@ -37,8 +37,8 @@ body {
 .quuizBox__model--welcome,
 .quuizBox__model--start,
 .quuizBox__model--end {
-    /* width: 90%; */
-    min-width: 60%;
+    /* width: 500px; */
+    min-width: 500px;
     background: #fff;
     padding: .5rem 1rem;
     max-width: 500px;
@@ -56,6 +56,7 @@ body {
 
 .quuizBox__model--welcome h1 {
     font-family: var(--font-roboto);
+    min-width: 500px;
 }
 
 .quuizBox__model--welcome p {
