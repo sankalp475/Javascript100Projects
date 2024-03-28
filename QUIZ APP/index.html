@@ -37,23 +37,15 @@
                 </button>
             </header>
             <main class="model__start--main">
-                <input  type="range"  name="range" value="-1" min="0" max="100">
+                <input type="range" name="range" value="-1" min="0" max="100">
                 <h3 data-questionbox>
                     Q1: Which of the following is true about HTML 5?
                 </h3>
                 <div class="opstions">
-                    <button class="opstion">
-                        HTML5 is the next major revision of the HTML standard superseding HTML 4.01, XHTML 1.0, and
-                        XHTML 1.1.
-                    </button>
-                    <button class="opstion">
-                        HTML5 is a cooperation between the World Wide Web Consortium (W3C) and the Web Hypertext
-                        Application Technology Working Group (WHATWG).
-                    </button>
-                    <button class="opstion ">
-                        HTML5 is a standard for structuring and presenting content on the World Wide Web
-                    </button>
-                    <button class="opstion">All of These</button>
+                    <button data-poinerEvents="auto" class="opstion"></button>
+                    <button data-poinerEvents="auto" class="opstion"></button>
+                    <button data-poinerEvents="auto" class="opstion"></button>
+                    <button data-poinerEvents="auto" class="opstion"></button>
                 </div>
             </main>
             <footer class="model__start--footer">
@@ -73,17 +65,18 @@
     <template data-endScreen-template>
         <section class="quuizBox__model--end" data-endScreen-container>
             <h1> you've completed the Quiz </h1>
+            <p class="display-message"></p>
             <div class="flex">
                 <div class="correct">
                     <p>correct answer</p>
                     <h4 class="score" data-correct-answer="">
-                        0
+                        
                     </h4>
                 </div>
                 <div class="wrong">
                     <p>wrong answer</p>
-                    <h4 class="score" data-cwrong-answer="">
-                        5
+                    <h4 class="score" data-wrong-answer="">
+                        
                     </h4>
                 </div>
             </div>

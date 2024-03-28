@@ -186,7 +186,7 @@ input[type="range"]::-moz-range-thumb {
     appearance: none;
     display: none;
     box-shadow: -407px 0 0 400px #007bff;
-    
+
     /* transition: attr(value) 0.5s ease-in-out !important; */
 }
 
@@ -233,11 +233,20 @@ main div.opstions>button.opstion[data-poinerEvents="disabled"] {
     pointer-events: none;
 }
 
-main div.opstions>button.opstion:hover {
+main div.opstions>button.opstion[data-poinerEvents="auto"]:hover {
     background: #007bff;
     color: #fff;
 }
 
+/* main div.opstions>button.opstion:hover{
+    filter: grayscale(1);
+    pointer-events: none;
+} */
+
+
+main div.opstions>button.opstion[data-poinerEvents="null"] {
+    pointer-events: none;
+}
 div.model__start--footer {
     display: flex;
     flex-direction: column;
@@ -345,15 +354,19 @@ div.flex {
 }
 
 div.flex div.correct {
-    background: rgba(248, 2, 2, 0.089);
-    border: 3px solid rgb(255, 0, 0);
+    background: rgba(100, 248, 2, 0.089);
+        border: 3px solid rgb(102, 255, 0);
     padding: 1rem;
     border-radius: 1rem;
 }
 
 div.flex div.wrong {
-    background: rgba(100, 248, 2, 0.089);
-    border: 3px solid rgb(102, 255, 0);
+    background: rgba(248, 2, 2, 0.089);
+        border: 3px solid rgb(255, 0, 0);
     padding: 1rem;
     border-radius: 1rem;
+}
+p.display-message {
+    font-size: 1.3rem;
+    margin: 1rem 0;
 }

@@ -10,6 +10,17 @@ const templateNode = document.querySelectorAll("template");
 const startscreen = "startscreenTemplate"
 const endscreen = "endscreenTemplate"
 
+function ScoreBoard() {
+
+    this.correctAnswer = 0;
+    this.wrongAnswer = 0;
+    this.updateCorrectAnswer = () => this.correctAnswer = this.correctAnswer + 1;
+    this.updatewrongAnswer = () => this.wrongAnswer = this.wrongAnswer + 1;
+}
+
+const score = new ScoreBoard();
+
+
 // let currentIndex, suffeledQuestion;
 
 const quizContainer = document.querySelector(".quizbox-container")
@@ -39,8 +50,13 @@ const Timer = (function () {
                 ))
 
                 // progress.setAttribu = ;
-                timerIntervalHandler(this, timerElement);
+                timerIntervalHandler(this);
+
+
             }, this.intervalDelay)
+        }
+        this.updateInterval = (value) => {
+            this.intervalDelay = value;
         }
     }
     return new TimeObject();
@@ -50,7 +66,7 @@ function genrateQuiz(content) {
 
 
     const { currentIndex, suffledArray } = QuestionObject
-
+    Timer.updateInterval(1000);
     const timerElement = content.querySelector(".quuizBox__model--start button.timer span");
     const progress = content.querySelector(".model__start--main input[type='range']");
 
@@ -65,33 +81,49 @@ function genrateQuiz(content) {
     remaningQue.innerText = currentIndex + 1;
     totelQue.innerText = question.length;
 
+    const nextBtn = content.querySelector("[data-next-btn-event]");
+    // nextBtn.style.display = "none"
+    nextBtn.setAttribute("style"," filter: grayscale(1); pointer-events: none;")
+    nextBtn.addEventListener("click", nextBtnEventHandler)
+
 
     quizContainer.innerHTML = "";
     quizContainer.appendChild(content);
 
+
 }
 
-function quizContent(content, { _question_, index }) {
+function nextBtnEventHandler() {
 
+
+    console.log(QuestionObject.currentIndex)
+    
+    clearInterval(Timer.timeInterval);
+    setTimeout(() => {
+        const content = getTemplateFromNode(templateNode, startscreen);
+        const timerElement = content.querySelector(".quuizBox__model--start button.timer span");
+        const progress = content.querySelector(".model__start--main input[type='range']");
+        Timer.updateInterval(10);
+        Timer.start(timerElement, progress);
+    }, 90)
+
+
+    
+}
+
+
+function quizContent(content, { _question_, index }) {
     const questionBox = content.querySelector("[data-questionbox]");
     questionBox.innerHTML = `Q${index + 1}: ${_question_.question}`;
-
     const options = content.querySelectorAll(".opstions button");
-
     const shuffledKeys = Object.keys(_question_.answers).sort(
         () => Math.random() - 0.5
     );
-    // const answerKey = `answer_${String.fromCharCode(97 + index)}`;
     shuffledKeys.forEach((key, index) => {
         options[index].innerHTML = _question_.answers[key];
-        // console.log(index, _question_.answers[key], index, key)
         options[index].setAttribute("data-answer", key);
     });
-
-
-    // const content = getTemplateFromNode(templateNode, startscreen);
     optionEventListner(content);
-    // let t = content.querySelector(".quuizBox__model--start button.timer span");
 
 }
 
@@ -120,34 +152,31 @@ const QuestionObject = (function () {
 
 
 function timerIntervalHandler(timerObject) {
-
-
     const { currentIndex, updateIndex } = QuestionObject;
-
     if (timerObject == null) return;
-
     if (timerObject.startTime <= 0) {
         clearInterval(timerObject.timeInterval);
-
         timerObject.startTime = question.length;
         if (currentIndex != question.length - 1) {
-
             updateIndex();
-
             const content = getTemplateFromNode(templateNode, startscreen);
             genrateQuiz(content);
-
         }
-
         if (currentIndex == question.length - 1) {
-            console.log("end screen is displayed")
+
+            const content = getTemplateFromNode(templateNode, endscreen);
+            const correctbox = content.querySelector("[data-correct-answer]");
+            const wrongbox = content.querySelector("[data-wrong-answer]");
+
+            correctbox.innerText = score.correctAnswer;
+            wrongbox.innerText = score.wrongAnswer;
+
+            quizContainer.innerHTML = "";
+            quizContainer.appendChild(content);
+            // console.log("end screen is displayed")
+            console.log(score)
         }
-        // console.log(suffeledQuestion[currentIndex]);
-        // console.log(currentIndex, suffeledQuestion[currentIndex])
-
     }
-
-
     (timerObject.startTime > timerObject.endTime)
         ? timerObject.startTime--
         : timerObject.endTime--;
@@ -166,20 +195,61 @@ function getTemplateFromNode(templateNode, dataset) {
 }
 
 function optionEventListner(content) {
+    const { currentIndex, suffledArray } = QuestionObject;
     const options = content.querySelectorAll(".opstions button");
     // console.log(options);
-    options.forEach((option) => {
-        // console.log(option)
+    options.forEach((option, index) => {
+        const answerKey = `answer_${String.fromCharCode(97 + index)}`;
         option.addEventListener("click", (event) => {
             // TODO check answer and put wrong and correct class for it accordingly
-            // Timer.timeInterval = null;
-            // console.log()
-            clearInterval(Timer.timeInterval)
-            
+            event.target.setAttribute("data-poinerEvents", "disabled")
+            checkAnswer({
+                target: event.target,
+                selectedAnswer: answerKey,
+                answer: suffledArray[currentIndex].correct_answer,
+                allOptions: options,
+            })
+
+            if (event.target.dataset.answer == suffledArray[currentIndex].correct_answer) {
+                score.updateCorrectAnswer();
+            } else {
+                score.updatewrongAnswer();
+            }
+
+            console.log("correctAnswer", score.correctAnswer, "wrongAnswer", score.wrongAnswer);
+
+            const nextBtn = document.querySelector("[data-next-btn-event]");
+            // nextBtn.style.display = "block"
+            nextBtn.removeAttribute("style", true)
+            clearInterval(Timer.timeInterval);
         })
     });
 
 
+}
+//  console.log("correctAnswer",score.correctAnswer,"wrongAnswer",score.wrongAnswer)
+function checkAnswer({
+    target,
+    answer,
+    allOptions
+}) {
+
+    const button = Array.from(
+        document.querySelectorAll(".opstions button")
+    ).filter(btn => btn.dataset.answer === answer && btn !== target);
+    allOptions.forEach((option, index) => {
+        option.setAttribute("data-poinerEvents", "disabled")
+        if (answer == target.dataset.answer) {
+            target.setAttribute("data-poinerEvents", null)
+            target.classList.add("correct");
+        }
+        if (answer != target.dataset.answer) {
+            target.setAttribute("data-poinerEvents", null)
+            target.classList.add("wrong");
+            button[0].setAttribute("data-poinerEvents", null);
+            button[0].classList.add("correct");
+        }
+    })
 }
 
 
