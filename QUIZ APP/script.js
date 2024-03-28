@@ -27,7 +27,6 @@ const quizContainer = document.querySelector(".quizbox-container")
 startQuizBtn.addEventListener("click", () => {
 
     const content = getTemplateFromNode(templateNode, startscreen);
-    // console.log(QuestionObject.suffledArray)
     QuestionObject.shuffleAllQuestion(question)
     genrateQuiz(content);
 
@@ -83,7 +82,7 @@ function genrateQuiz(content) {
 
     const nextBtn = content.querySelector("[data-next-btn-event]");
     // nextBtn.style.display = "none"
-    nextBtn.setAttribute("style"," filter: grayscale(1); pointer-events: none;")
+    nextBtn.setAttribute("style", " filter: grayscale(1); pointer-events: none;")
     nextBtn.addEventListener("click", nextBtnEventHandler)
 
 
@@ -97,7 +96,7 @@ function nextBtnEventHandler() {
 
 
     console.log(QuestionObject.currentIndex)
-    
+
     clearInterval(Timer.timeInterval);
     setTimeout(() => {
         const content = getTemplateFromNode(templateNode, startscreen);
@@ -108,7 +107,7 @@ function nextBtnEventHandler() {
     }, 90)
 
 
-    
+
 }
 
 
@@ -170,6 +169,14 @@ function timerIntervalHandler(timerObject) {
 
             correctbox.innerText = score.correctAnswer;
             wrongbox.innerText = score.wrongAnswer;
+
+            const restart = content.querySelector("[id=\"btn-start\"]");
+            const quit = content.querySelector("[id=\"btn-quit\"]");
+
+
+            quit.addEventListener("click", () => {
+                window.location.reload();
+            })
 
             quizContainer.innerHTML = "";
             quizContainer.appendChild(content);
